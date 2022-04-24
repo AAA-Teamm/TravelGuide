@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import androidx.core.database.getStringOrNull
 import com.ateam.travelguide.model.Image
 import com.ateam.travelguide.util.Constant.DATABASE_NAME
 import com.ateam.travelguide.util.Constant.ID
@@ -51,7 +52,7 @@ class ImageOperation(context: Context) {
             do {
                 val image = Image(
                     id = c.getInt(0),
-                    uri = c.getString(c.getColumnIndex(IMAGE_URI)),
+                    uri = c.getStringOrNull(c.getColumnIndex(IMAGE_URI)),
                     locationId = c.getInt(c.getColumnIndex(IMAGE_LOCATION_ID))
                 )
                 imageList.add(image)
@@ -74,7 +75,7 @@ class ImageOperation(context: Context) {
         while (c.moveToNext()) {
             image = Image(
                 id = c.getInt(0),
-                uri = c.getString(c.getColumnIndex(IMAGE_URI)),
+                uri = c.getStringOrNull(c.getColumnIndex(IMAGE_URI)),
                 locationId = c.getInt(c.getColumnIndex(IMAGE_LOCATION_ID))
             )
         }

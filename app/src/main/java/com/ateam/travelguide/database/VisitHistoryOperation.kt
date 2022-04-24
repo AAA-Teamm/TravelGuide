@@ -5,6 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import androidx.core.database.getIntOrNull
+import androidx.core.database.getStringOrNull
 import com.ateam.travelguide.model.VisitHistory
 import com.ateam.travelguide.util.Constant.DATABASE_NAME
 import com.ateam.travelguide.util.Constant.DAY
@@ -58,10 +60,10 @@ class VisitHistoryOperation(context: Context) {
             do {
                 val visitHistory = VisitHistory(
                     id = c.getInt(0),
-                    year = c.getInt(c.getColumnIndex(YEAR)),
-                    month = c.getInt(c.getColumnIndex(MONTH)),
-                    day = c.getInt(c.getColumnIndex(DAY)),
-                    longDescription = c.getString(c.getColumnIndex(HISTORY_LONG_DESCRIPTION)),
+                    year = c.getIntOrNull(c.getColumnIndex(YEAR)),
+                    month = c.getIntOrNull(c.getColumnIndex(MONTH)),
+                    day = c.getIntOrNull(c.getColumnIndex(DAY)),
+                    longDescription = c.getStringOrNull(c.getColumnIndex(HISTORY_LONG_DESCRIPTION)),
                     historyLocationId = c.getInt(c.getColumnIndex(HISTORY_LOCATION_ID))
                 )
                 visitHistoryList.add(visitHistory)
