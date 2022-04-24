@@ -96,11 +96,11 @@ class LocationOperation(context: Context) {
         while (c.moveToNext()) {
             location = Location(
                 id = c.getInt(0),
-                name = c.getString(c.getColumnIndex(LOCATION_NAME)),
-                date = c.getString(c.getColumnIndex(LOCATION_DATE)),
-                shortDescription = c.getString(c.getColumnIndex(LOCATION_SHORT_DESCRIPTION)),
-                longDescription = c.getString(c.getColumnIndex(LOCATION_LONG_DESCRIPTION)),
-                priority = c.getInt(c.getColumnIndex(LOCATION_PRIORITY)),
+                name = c.getStringOrNull(c.getColumnIndex(LOCATION_NAME)),
+                date = c.getStringOrNull(c.getColumnIndex(LOCATION_DATE)),
+                shortDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_SHORT_DESCRIPTION)),
+                longDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_LONG_DESCRIPTION)),
+                priority = c.getIntOrNull(c.getColumnIndex(LOCATION_PRIORITY)),
                 visitStatus = c.getString(c.getColumnIndex(LOCATION_VISIT_STATUS)).equals("True"),
                 latitude = c.getString(c.getColumnIndex(LOCATION_LATITUDE)),
                 longitude = c.getString(c.getColumnIndex(LOCATION_LONGITUDE))
