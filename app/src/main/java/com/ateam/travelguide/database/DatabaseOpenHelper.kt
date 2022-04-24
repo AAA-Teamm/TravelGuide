@@ -21,7 +21,8 @@ class DatabaseOpenHelper(context: Context, name: String, factory: SQLiteDatabase
 
         val visitHistoryTable =
             "CREATE TABLE $VISIT_HISTORY_TABLE(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    "year INTEGER, month INTEGER, day INTEGER, history_location_id INTEGER REFERENCES $LOCATION_TABLE(id))"
+                    "year INTEGER, month INTEGER, day INTEGER, long_description TEXT, " +
+                    "history_location_id INTEGER REFERENCES $LOCATION_TABLE(id))"
 
         db.execSQL(locationTable)
         db.execSQL(imageTable)

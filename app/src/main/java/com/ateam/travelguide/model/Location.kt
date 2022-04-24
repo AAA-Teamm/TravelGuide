@@ -1,13 +1,13 @@
 package com.ateam.travelguide.model
 
-class Location(
+data class Location(
     val id: Int = 0,
-    val locationName: String?,
-    val locationDate: String?,
-    val locationShortDescription: String?,
-    val locationLongDescription: String?,
-    val locationPriority: Int?,
-    val locationVisitStatus: Boolean?,
-    val locationLatitude: String,
-    val locationLongitude: String
+    val name: String?,
+    val date: String?,
+    val shortDescription: String?,
+    val longDescription: String?,
+    val priority: Int?,
+    val visitStatus: Boolean = false,
+    val latitude: String,
+    val longitude: String
 )

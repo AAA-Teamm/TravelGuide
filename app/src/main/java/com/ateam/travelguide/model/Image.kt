@@ -1,7 +1,7 @@
 package com.ateam.travelguide.model
 
-class Image(
+data class Image(
     val id: Int = 0,
-    val imageUri: String?,
-    val imageLocationId: Int
+    val uri: String?,
+    val locationId: Int
 )
