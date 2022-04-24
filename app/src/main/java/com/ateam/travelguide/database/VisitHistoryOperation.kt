@@ -35,7 +35,7 @@ class VisitHistoryOperation(context: Context) {
         cv.put(MONTH, visitHistory.month)
         cv.put(DAY, visitHistory.day)
         cv.put(HISTORY_LONG_DESCRIPTION, visitHistory.longDescription)
-        cv.put(HISTORY_LOCATION_ID, visitHistory.history_location_id)
+        cv.put(HISTORY_LOCATION_ID, visitHistory.historyLocationId)
 
         open()
         travelGuideDatabase!!.insert(VISIT_HISTORY_TABLE, null, cv)
@@ -62,7 +62,7 @@ class VisitHistoryOperation(context: Context) {
                     month = c.getInt(c.getColumnIndex(MONTH)),
                     day = c.getInt(c.getColumnIndex(DAY)),
                     longDescription = c.getString(c.getColumnIndex(HISTORY_LONG_DESCRIPTION)),
-                    history_location_id = c.getInt(c.getColumnIndex(HISTORY_LOCATION_ID))
+                    historyLocationId = c.getInt(c.getColumnIndex(HISTORY_LOCATION_ID))
                 )
                 visitHistoryList.add(visitHistory)
             } while (c.moveToNext())
