@@ -9,14 +9,15 @@ import androidx.core.database.getIntOrNull
 import androidx.core.database.getStringOrNull
 import com.ateam.travelguide.model.VisitHistory
 import com.ateam.travelguide.util.Constant.DATABASE_NAME
-import com.ateam.travelguide.util.Constant.DAY
+import com.ateam.travelguide.util.Constant.HISTORY_DAY
 import com.ateam.travelguide.util.Constant.HISTORY_LOCATION_ID
 import com.ateam.travelguide.util.Constant.HISTORY_LONG_DESCRIPTION
-import com.ateam.travelguide.util.Constant.MONTH
+import com.ateam.travelguide.util.Constant.HISTORY_MONTH
+import com.ateam.travelguide.util.Constant.HISTORY_YEAR
 import com.ateam.travelguide.util.Constant.VISIT_HISTORY_TABLE
-import com.ateam.travelguide.util.Constant.YEAR
 
 class VisitHistoryOperation(context: Context) {
+
     private var travelGuideDatabase: SQLiteDatabase? = null
     private var dbOpenHelper: DatabaseOpenHelper = DatabaseOpenHelper(context,
         DATABASE_NAME, null, 1)
@@ -33,9 +34,9 @@ class VisitHistoryOperation(context: Context) {
 
     fun addVisitHistory(visitHistory : VisitHistory) {
         val cv = ContentValues()
-        cv.put(YEAR, visitHistory.year)
-        cv.put(MONTH, visitHistory.month)
-        cv.put(DAY, visitHistory.day)
+        cv.put(HISTORY_YEAR, visitHistory.year)
+        cv.put(HISTORY_MONTH, visitHistory.month)
+        cv.put(HISTORY_DAY, visitHistory.day)
         cv.put(HISTORY_LONG_DESCRIPTION, visitHistory.longDescription)
         cv.put(HISTORY_LOCATION_ID, visitHistory.historyLocationId)
 
@@ -60,9 +61,9 @@ class VisitHistoryOperation(context: Context) {
             do {
                 val visitHistory = VisitHistory(
                     id = c.getInt(0),
-                    year = c.getIntOrNull(c.getColumnIndex(YEAR)),
-                    month = c.getIntOrNull(c.getColumnIndex(MONTH)),
-                    day = c.getIntOrNull(c.getColumnIndex(DAY)),
+                    year = c.getIntOrNull(c.getColumnIndex(HISTORY_YEAR)),
+                    month = c.getIntOrNull(c.getColumnIndex(HISTORY_MONTH)),
+                    day = c.getIntOrNull(c.getColumnIndex(HISTORY_DAY)),
                     longDescription = c.getStringOrNull(c.getColumnIndex(HISTORY_LONG_DESCRIPTION)),
                     historyLocationId = c.getInt(c.getColumnIndex(HISTORY_LOCATION_ID))
                 )

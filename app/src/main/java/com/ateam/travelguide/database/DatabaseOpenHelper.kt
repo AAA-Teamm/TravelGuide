@@ -8,6 +8,7 @@ import com.ateam.travelguide.util.Constant.LOCATION_TABLE
 import com.ateam.travelguide.util.Constant.VISIT_HISTORY_TABLE
 
 class DatabaseOpenHelper(context: Context, name: String, factory: SQLiteDatabase.CursorFactory?, version: Int) : SQLiteOpenHelper(context, name, factory, version){
+
     override fun onCreate(db : SQLiteDatabase) {
 
         val locationTable =
@@ -16,12 +17,12 @@ class DatabaseOpenHelper(context: Context, name: String, factory: SQLiteDatabase
                     "location_visit_status BOOLEAN, location_latitude TEXT NOT NULL, location_longitude TEXT NOT NULL)"
 
         val imageTable =
-            "CREATE TABLE $IMAGE_TABLE(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, image_uri " +
-                    "TEXT, image_location_id INTEGER REFERENCES $LOCATION_TABLE(id))"
+            "CREATE TABLE $IMAGE_TABLE(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, image_uri TEXT,image_year INTEGER," +
+                    " image_month INTEGER, image_day INTEGER, image_location_id INTEGER REFERENCES $LOCATION_TABLE(id))"
 
         val visitHistoryTable =
             "CREATE TABLE $VISIT_HISTORY_TABLE(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    "year INTEGER, month INTEGER, day INTEGER, long_description TEXT, " +
+                    "history_year INTEGER, history_month INTEGER, history_day INTEGER, long_description TEXT, " +
                     "history_location_id INTEGER REFERENCES $LOCATION_TABLE(id))"
 
         db.execSQL(locationTable)

@@ -20,12 +20,15 @@ object Constant {
 
     // Image table column titles
     const val IMAGE_URI = "image_uri"
+    const val IMAGE_YEAR = "image_year"
+    const val IMAGE_MONTH = "image_month"
+    const val IMAGE_DAY = "image_day"
     const val IMAGE_LOCATION_ID = "image_location_id"
 
     // Visit History table column titles
-    const val YEAR = "history_year"
-    const val MONTH = "history_month"
-    const val DAY = "history_day"
+    const val HISTORY_YEAR = "history_year"
+    const val HISTORY_MONTH = "history_month"
+    const val HISTORY_DAY = "history_day"
     const val HISTORY_LONG_DESCRIPTION = "long_description"
     const val HISTORY_LOCATION_ID = "history_location_id"
 
