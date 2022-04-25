@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageViewSelectedPhoto"
+            android:id="@+id/imageViewPhoto"
             android:layout_width="0dp"
             android:layout_height="96dp"
             android:scaleType="fitXY"
@@ -35,7 +35,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageViewSelectedPhoto" />
+            app:layout_constraintTop_toBottomOf="@id/imageViewPhoto" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

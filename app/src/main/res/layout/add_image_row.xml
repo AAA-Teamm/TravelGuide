@@ -15,7 +15,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageViewSelectedPhoto"
+            android:id="@+id/imageViewSelectPhoto"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@null"
