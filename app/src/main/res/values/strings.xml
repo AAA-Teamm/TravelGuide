@@ -9,4 +9,12 @@
     <string name="location_long_desc">Kısa Açıklama</string>
     <string name="visit_history">Ziyaret Geçmişi</string>
     <string name="visit_date">Ziyaret Tarihi</string>
+    <string name="where_are_you_want_to_upload_image_from">Resmi Nereden Yüklemek İstersiniz?</string>
+    <string name="camera">Kamera</string>
+    <string name="Gallery">Galeri</string>
+    <string name="image_taken">Resim Çekildi!</string>
+    <string name="permission_required">İzin Gerekli!</string>
+    <string name="go_settings_and_approve_permissions">Ayarlara gidin ve izinleri onaylayın!</string>
+    <string name="settings">Ayarlar</string>
+    <string name="cancel">Vazgeç</string>
 </resources>

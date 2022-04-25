@@ -1,6 +1,5 @@
 package com.ateam.travelguide.util
 
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -18,10 +17,11 @@ sealed class VisitHistoryViewHolder(binding: ViewBinding) : RecyclerView.ViewHol
 
     class AddImageWithDeleteButtonViewHolder(private val binding: AddImageRowWithDeleteButtonBinding) :
         VisitHistoryViewHolder(binding) {
-        // todo "dont forget to give the data list as URI"
-        fun bind(imageUri: Int, clickListener: VisitHistoryImagesClickListener) {
-            binding.imageViewDelete.setOnClickListener { clickListener.onClickedDeleteButton() }
-            binding.imageViewPhoto.setImageResource(imageUri)
+        fun bind(imageUri: Uri, position: Int, clickListener: VisitHistoryImagesClickListener) {
+            binding.imageViewDelete.setOnClickListener {
+                clickListener.onClickedDeleteButton(position)
+            }
+            binding.imageViewPhoto.setImageURI(imageUri)
         }
     }
 

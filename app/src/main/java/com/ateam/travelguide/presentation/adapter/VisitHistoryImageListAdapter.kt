@@ -1,5 +1,6 @@
 package com.ateam.travelguide.presentation.adapter
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -15,20 +16,19 @@ class VisitHistoryImageListAdapter(
     private val clickListener: VisitHistoryImagesClickListener,
 ) : RecyclerView.Adapter<VisitHistoryViewHolder>() {
 
-    // todo "dont forget to give the data list as URI"
-    private val diffUtil = object : DiffUtil.ItemCallback<Int>() {
-        override fun areItemsTheSame(oldItem: Int, newItem: Int): Boolean {
+    private val diffUtil = object : DiffUtil.ItemCallback<Uri>() {
+        override fun areItemsTheSame(oldItem: Uri, newItem: Uri): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Int, newItem: Int): Boolean {
+        override fun areContentsTheSame(oldItem: Uri, newItem: Uri): Boolean {
             return oldItem == newItem
         }
     }
 
     private var recyclerDiffUtil = AsyncListDiffer(this, diffUtil)
 
-    var imageList: List<Int>
+    var imageList: List<Uri>
         get() = recyclerDiffUtil.currentList
         set(value) = recyclerDiffUtil.submitList(value)
 
@@ -59,6 +59,7 @@ class VisitHistoryImageListAdapter(
             )
             is VisitHistoryViewHolder.AddImageWithDeleteButtonViewHolder -> holder.bind(
                 imageList[position],
+                position,
                 clickListener
             )
         }
@@ -68,7 +69,7 @@ class VisitHistoryImageListAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (imageList[position]) {
-            -1 -> R.layout.add_image_row
+            Uri.EMPTY -> R.layout.add_image_row
             else -> R.layout.add_image_row_with_delete_button
         }
     }
