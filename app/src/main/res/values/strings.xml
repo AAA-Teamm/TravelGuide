@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">TravelGuide</string>
+    <string name="priority">Öncelik</string>
+    <string name="add_visit">Ziyaret Ekle</string>
+    <string name="show_location">Konum\nGöster</string>
+    <string name="location_short_desc">Yer Kısa tanım</string>
+    <string name="location_long_desc">Kısa Açıklama</string>
+    <string name="visit_history">Ziyaret Geçmişi</string>
 </resources>
