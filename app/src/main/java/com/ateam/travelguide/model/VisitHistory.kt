@@ -6,5 +6,5 @@ data class VisitHistory(
     val month: Int?,
     val day: Int?,
     val longDescription: String?,
-    val history_location_id : Int
+    val historyLocationId : Int
 )

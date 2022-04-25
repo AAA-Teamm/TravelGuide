@@ -26,6 +26,7 @@ object Constant {
     const val YEAR = "history_year"
     const val MONTH = "history_month"
     const val DAY = "history_day"
+    const val HISTORY_LONG_DESCRIPTION = "long_description"
     const val HISTORY_LOCATION_ID = "history_location_id"
 
 }
