@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ateam.travelguide.databinding.FragmentLocationDetailBinding
+import com.ateam.travelguide.model.VisitHistory
+import com.ateam.travelguide.presentation.adapter.VisitHistoryAdapter
 
 class LocationDetailFragment : Fragment() {
 
     private var _binding: FragmentLocationDetailBinding? = null
     private val binding get() = _binding!!
+    private lateinit var adapter: VisitHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,11 +26,25 @@ class LocationDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = VisitHistoryAdapter()
+
+        // todo "we will be delete mock list"
+        adapter.visitHistoryList = listOf(
+            VisitHistory(0,2022,12,1,"long desc",1),
+            VisitHistory(0,2022,12,1,"long desc",1),
+            VisitHistory(0,2022,12,1,"long desc",1),
+            VisitHistory(0,2022,12,1,"long desc",1),
+            VisitHistory(0,2022,12,1,"long desc",1)
+        )
+
         // todo "we will be update this line"
-        binding.toolbarTitle.text = "Konum Adi"
-        binding.textViewHistoryDate.text = "12.10.2022"
-        binding.textViewShortDesc.text = "Yer Kisa tanim bilgisi"
-        binding.textViewLongDesc.text = "Kisa Aciklama en fazla 3 satir"
+        binding.apply {
+            toolbarTitle.text = "Konum Adi"
+            textViewHistoryDate.text = "12.10.2022"
+            textViewShortDesc.text = "Yer Kisa tanim bilgisi"
+            textViewLongDesc.text = "Kisa Aciklama en fazla 3 satir"
+            recyclerViewVisitHistory.adapter = adapter
+        }
     }
 
     override fun onDestroyView() {
