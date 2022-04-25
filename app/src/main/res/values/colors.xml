@@ -9,9 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#4DA7FC</color>
     <color name="gray">#4B4848</color>
+    <color name="green">#00C914</color>
     <color name="gray_light">#9E9E9E</color>
 
     <color name="default_page_background_color">#E9EAE9</color>
     <color name="default_text_color">@color/gray</color>
     <color name="default_text_color_light">@color/gray_light</color>
+    <color name="gray_circle_image">#C8C8C8</color>
 </resources>
