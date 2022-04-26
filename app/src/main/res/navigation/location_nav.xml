@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/location_nav"
+    app:startDestination="@id/locationDetailFragment">
+
+    <fragment
+        android:id="@+id/locationDetailFragment"
+        android:name="com.ateam.travelguide.presentation.ui.fragment.location_detail.LocationDetailFragment"
+        android:label="fragment_location_detail"
+        tools:layout="@layout/fragment_location_detail" >
+        <action
+            android:id="@+id/action_locationDetailFragment_to_locationVisitHistoryFragment"
+            app:destination="@id/locationVisitHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationVisitHistoryFragment"
+        android:name="com.ateam.travelguide.presentation.ui.fragment.location_visit_history.LocationVisitHistoryFragment"
+        android:label="fragment_location_visit_history"
+        tools:layout="@layout/fragment_location_visit_history" >
+        <action
+            android:id="@+id/action_locationVisitHistoryFragment_to_locationDetailMapsFragment"
+            app:destination="@id/locationDetailMapsFragment" />
+        <argument
+            android:name="locationId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationDetailMapsFragment"
+        android:name="com.ateam.travelguide.presentation.ui.fragment.location_detail_map.LocationDetailMapsFragment"
+        android:label="fragment_location_detail_maps"
+        tools:layout="@layout/fragment_location_detail_maps" >
+        <argument
+            android:name="locationId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>
