@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.AddImageRowBinding
 import com.ateam.travelguide.databinding.AddImageRowWithDeleteButtonBinding
+import com.ateam.travelguide.model.Image
+import com.ateam.travelguide.util.Constant.NO_IMAGE_FEATURE
 import com.ateam.travelguide.util.VisitHistoryImagesClickListener
 import com.ateam.travelguide.util.VisitHistoryViewHolder
 
@@ -15,20 +17,19 @@ class VisitHistoryImageListAdapter(
     private val clickListener: VisitHistoryImagesClickListener,
 ) : RecyclerView.Adapter<VisitHistoryViewHolder>() {
 
-    // todo "dont forget to give the data list as URI"
-    private val diffUtil = object : DiffUtil.ItemCallback<Int>() {
-        override fun areItemsTheSame(oldItem: Int, newItem: Int): Boolean {
+    private val diffUtil = object : DiffUtil.ItemCallback<Image>() {
+        override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Int, newItem: Int): Boolean {
+        override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
             return oldItem == newItem
         }
     }
 
     private var recyclerDiffUtil = AsyncListDiffer(this, diffUtil)
 
-    var imageList: List<Int>
+    var imageList: List<Image>
         get() = recyclerDiffUtil.currentList
         set(value) = recyclerDiffUtil.submitList(value)
 
@@ -59,6 +60,7 @@ class VisitHistoryImageListAdapter(
             )
             is VisitHistoryViewHolder.AddImageWithDeleteButtonViewHolder -> holder.bind(
                 imageList[position],
+                position,
                 clickListener
             )
         }
@@ -67,8 +69,8 @@ class VisitHistoryImageListAdapter(
     override fun getItemCount(): Int = imageList.size
 
     override fun getItemViewType(position: Int): Int {
-        return when (imageList[position]) {
-            -1 -> R.layout.add_image_row
+        return when (imageList[position].uri) {
+            NO_IMAGE_FEATURE -> R.layout.add_image_row
             else -> R.layout.add_image_row_with_delete_button
         }
     }
