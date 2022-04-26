@@ -4,8 +4,10 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.ateam.travelguide.database.ImageOperation
+import com.ateam.travelguide.database.LocationOperation
 import com.ateam.travelguide.database.VisitHistoryOperation
 import com.ateam.travelguide.model.Image
+import com.ateam.travelguide.model.Location
 import com.ateam.travelguide.model.VisitHistory
 
 class LocationVisitHistoryViewModel : ViewModel() {
@@ -20,6 +22,10 @@ class LocationVisitHistoryViewModel : ViewModel() {
 
     fun addNewImagesToDatabase(context: Context, image: Image) {
         ImageOperation(context).addImage(image)
+    }
+
+    fun getLocationInfo(context: Context, locationId: Int): Location? {
+        return LocationOperation(context).getSelectedLocation(locationId)
     }
 
 }

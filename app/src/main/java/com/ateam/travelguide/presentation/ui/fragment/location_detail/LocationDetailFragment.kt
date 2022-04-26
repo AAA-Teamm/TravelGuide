@@ -9,10 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.FragmentLocationDetailBinding
 import com.ateam.travelguide.model.Location
 import com.ateam.travelguide.presentation.adapter.VisitHistoryAdapter
+import com.ateam.travelguide.util.Constant.LOCATION_ID
 
 class LocationDetailFragment : Fragment() {
 
@@ -21,6 +23,7 @@ class LocationDetailFragment : Fragment() {
     private lateinit var adapter: VisitHistoryAdapter
     private lateinit var viewModel: LocationDetailViewModel
     private var locationInfo: Location? = null
+    private var locationId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,22 +45,29 @@ class LocationDetailFragment : Fragment() {
     private fun initView() {
         adapter = VisitHistoryAdapter()
         viewModel = ViewModelProvider(this).get(LocationDetailViewModel::class.java)
+        locationId = requireActivity().intent.getIntExtra(LOCATION_ID, 0)
     }
 
     private fun initClickListeners() {
         binding.apply {
             buttonAddVisit.setOnClickListener {
-                // no-op
+                val action = LocationDetailFragmentDirections
+                    .actionLocationDetailFragmentToLocationVisitHistoryFragment(locationId = locationId!!)
+                findNavController().navigate(action)
             }
             buttonShowLocation.setOnClickListener {
-                // no-op
+                val action = LocationDetailFragmentDirections
+                    .actionLocationDetailFragmentToLocationDetailMapsFragment(locationId = locationId!!)
+                findNavController().navigate(action)
+            }
+            imageViewBackNavigation.setOnClickListener {
+                requireActivity().finish()
             }
         }
     }
 
     private fun initUi() {
-        // todo "update id for selected location"
-        locationInfo = viewModel.getLocationInfo(requireContext(), 0)
+        locationInfo = viewModel.getLocationInfo(requireContext(), locationId!!)
 
         // todo "we will be update this line"
         locationInfo?.let {
@@ -97,7 +107,7 @@ class LocationDetailFragment : Fragment() {
     private fun initVisitHistoryRecycler() {
         // todo "update id for selected location"
         adapter.visitHistoryList =
-            viewModel.getAllVisitHistoryForSelectedLocation(requireContext(), 0)
+            viewModel.getAllVisitHistoryForSelectedLocation(requireContext(), locationId!!)
         binding.recyclerViewVisitHistory.adapter = adapter
     }
 

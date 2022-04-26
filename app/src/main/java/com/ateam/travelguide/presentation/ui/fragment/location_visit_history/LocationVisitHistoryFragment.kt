@@ -15,9 +15,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.FragmentLocationVisitHistoryBinding
 import com.ateam.travelguide.model.Image
+import com.ateam.travelguide.model.Location
 import com.ateam.travelguide.model.VisitHistory
 import com.ateam.travelguide.presentation.adapter.VisitHistoryImageListAdapter
 import com.ateam.travelguide.util.*
@@ -35,17 +37,18 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private var _binding: FragmentLocationVisitHistoryBinding? = null
     private val binding get() = _binding!!
     private val calendar: Calendar = Calendar.getInstance()
-    private lateinit var adapter: VisitHistoryImageListAdapter
-    private lateinit var viewModel: LocationVisitHistoryViewModel
-    private lateinit var imageList: ArrayList<Image>
-    private lateinit var imageUri: Uri
-
-    // todo "change id with real data"
-    private val defaultNoImageData = Image(0, NO_IMAGE_FEATURE, null, null, null, id)
+    private val args: LocationVisitHistoryFragmentArgs by navArgs()
+    private var locationId: Int? = null
     private var year: Int = 0
     private var month: Int = 0
     private var day: Int = 0
     private var lastImageListSize = 0
+    private lateinit var adapter: VisitHistoryImageListAdapter
+    private lateinit var viewModel: LocationVisitHistoryViewModel
+    private lateinit var imageList: ArrayList<Image>
+    private lateinit var imageUri: Uri
+    private lateinit var defaultNoImageData: Image
+    private lateinit var locationInfo: Location
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,28 +66,27 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     }
 
     private fun initView() {
+        locationId = args.locationId
         viewModel = ViewModelProvider(this).get(LocationVisitHistoryViewModel::class.java)
         adapter = VisitHistoryImageListAdapter(this)
         imageList = ArrayList()
+        defaultNoImageData = Image(0, NO_IMAGE_FEATURE, null, null, null, locationId!!)
+        locationInfo = viewModel.getLocationInfo(requireContext(), locationId!!)!!
         val today = String().getTheDay(calendar)
-        // todo "change id with real data"
-        val id = 0
 
         day = String().getTheDayWithSeparate(calendar)[0]
         month = String().getTheDayWithSeparate(calendar)[1]
         year = String().getTheDayWithSeparate(calendar)[2]
 
-        // todo "we will be update this line"
         binding.apply {
-            toolbarTitle.text = "Konum AdiX"
+            toolbarTitle.text = locationInfo.name
         }
 
-        imageList = viewModel.getAllImage(requireContext(), id)
+        imageList = viewModel.getAllImage(requireContext(), locationId!!)
         lastImageListSize = imageList.size
 
         println(imageList.size)
         if (imageList.size < 10) {
-            // todo "change id with real data"
             imageList.add(defaultNoImageData)
         }
 
@@ -95,14 +97,13 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
 
     private fun initClickListeners() {
         binding.buttonAddVisit.setOnClickListener {
-            // todo "update object with real data (like historyLocationId)"
             val visitHistory = VisitHistory(
                 id = 0,
                 year = calendar[Calendar.YEAR],
                 month = calendar[Calendar.MONTH] + 1,
                 day = calendar[Calendar.DATE],
                 longDescription = binding.editTextDescription.text.toString(),
-                historyLocationId = 1
+                historyLocationId = locationId!!
             )
             viewModel.addVisitHistory(requireContext(), visitHistory)
             for (i in lastImageListSize until imageList.size - 1) {
@@ -147,8 +148,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private var galleryResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
-                // todo "update location Id"
-                val newImage = Image(0, it.data!!.data.toString(), year, month, day, 0)
+                val newImage = Image(0, it.data!!.data.toString(), year, month, day, locationId!!)
                 imageList.add(newImage)
                 updateImageListInRecycler(imageList)
             }
@@ -157,7 +157,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private var cameraResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
-                val newImage = Image(0, imageUri.toString(), year, month, day, 0)
+                val newImage = Image(0, imageUri.toString(), year, month, day, locationId!!)
                 imageList.add(newImage)
                 updateImageListInRecycler(imageList)
                 Toast.makeText(
