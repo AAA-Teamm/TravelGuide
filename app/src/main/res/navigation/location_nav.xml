@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_locationDetailFragment_to_locationVisitHistoryFragment"
             app:destination="@id/locationVisitHistoryFragment" />
+        <action
+            android:id="@+id/action_locationDetailFragment_to_locationDetailMapsFragment"
+            app:destination="@id/locationDetailMapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationVisitHistoryFragment"
