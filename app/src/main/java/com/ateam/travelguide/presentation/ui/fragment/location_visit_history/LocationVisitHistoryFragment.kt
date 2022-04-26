@@ -17,9 +17,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.FragmentLocationVisitHistoryBinding
+import com.ateam.travelguide.model.Image
 import com.ateam.travelguide.model.VisitHistory
 import com.ateam.travelguide.presentation.adapter.VisitHistoryImageListAdapter
 import com.ateam.travelguide.util.*
+import com.ateam.travelguide.util.Constant.NO_IMAGE_FEATURE
 import com.ateam.travelguide.util.Constant.REQ_CODE_CAMERA
 import com.ateam.travelguide.util.Constant.REQ_CODE_GALLERY
 import com.ateam.travelguide.util.Permissions.Companion.cameraRequestList
@@ -35,8 +37,15 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private val calendar: Calendar = Calendar.getInstance()
     private lateinit var adapter: VisitHistoryImageListAdapter
     private lateinit var viewModel: LocationVisitHistoryViewModel
-    private lateinit var imageList: ArrayList<Uri>
+    private lateinit var imageList: ArrayList<Image>
     private lateinit var imageUri: Uri
+
+    // todo "change id with real data"
+    private val defaultNoImageData = Image(0, NO_IMAGE_FEATURE, null, null, null, id)
+    private var year: Int = 0
+    private var month: Int = 0
+    private var day: Int = 0
+    private var lastImageListSize = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,22 +58,39 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
+        initClickListeners()
+    }
+
+    private fun initView() {
         viewModel = ViewModelProvider(this).get(LocationVisitHistoryViewModel::class.java)
+        adapter = VisitHistoryImageListAdapter(this)
+        imageList = ArrayList()
+        val today = String().getTheDay(calendar)
+        // todo "change id with real data"
+        val id = 0
+
+        day = String().getTheDayWithSeparate(calendar)[0]
+        month = String().getTheDayWithSeparate(calendar)[1]
+        year = String().getTheDayWithSeparate(calendar)[2]
+
         // todo "we will be update this line"
         binding.apply {
             toolbarTitle.text = "Konum AdiX"
         }
 
-        imageList = ArrayList()
-        imageList.add(Uri.EMPTY)
+        imageList = viewModel.getAllImage(requireContext(), id)
+        lastImageListSize = imageList.size
 
-        val today = String().getTheDay(calendar)
+        println(imageList.size)
+        if (imageList.size < 10) {
+            // todo "change id with real data"
+            imageList.add(defaultNoImageData)
+        }
+
         binding.textViewDate.text = today
-        initClickListeners()
 
-        adapter = VisitHistoryImageListAdapter(this)
         updateImageListInRecycler(imageList)
-
     }
 
     private fun initClickListeners() {
@@ -79,6 +105,9 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
                 historyLocationId = 1
             )
             viewModel.addVisitHistory(requireContext(), visitHistory)
+            for (i in lastImageListSize until imageList.size - 1) {
+                viewModel.addNewImagesToDatabase(requireContext(), imageList[i])
+            }
         }
 
         binding.cardViewVisitDate.setOnClickListener {
@@ -118,7 +147,9 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private var galleryResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
-                imageList.add(it.data!!.data!!)
+                // todo "update location Id"
+                val newImage = Image(0, it.data!!.data.toString(), year, month, day, 0)
+                imageList.add(newImage)
                 updateImageListInRecycler(imageList)
             }
         }
@@ -126,8 +157,8 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private var cameraResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
-                println(it.data!!.data)
-                imageList.add(imageUri)
+                val newImage = Image(0, imageUri.toString(), year, month, day, 0)
+                imageList.add(newImage)
                 updateImageListInRecycler(imageList)
                 Toast.makeText(
                     requireContext(),
@@ -193,7 +224,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
         }
     }
 
-    private fun updateImageListInRecycler(imageList: List<Uri>) {
+    private fun updateImageListInRecycler(imageList: List<Image>) {
         updateAddNewPhotoState()
         adapter.imageList = imageList
         binding.recyclerView.adapter = adapter
@@ -201,20 +232,25 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
 
     private fun updateAddNewPhotoState() {
         for (i in imageList.indices) {
-            if (imageList[i] == Uri.EMPTY && imageList.size > i) {
+            if (imageList[i].uri == NO_IMAGE_FEATURE && imageList.size > i) {
                 imageList.removeAt(i)
-                imageList.add(Uri.EMPTY)
+                if (imageList.size < 10) {
+                    imageList.add(defaultNoImageData)
+                }
             }
         }
     }
 
     private fun showCalender() {
         val dateListener =
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, yearX, monthOfYear, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                val date = "$dayOfMonth.${monthOfYear + 1}.$year"
+                val date = "$dayOfMonth.${monthOfYear + 1}.$yearX"
+                day = dayOfMonth
+                month = monthOfYear
+                year = yearX
                 binding.textViewDate.text = date
             }
 

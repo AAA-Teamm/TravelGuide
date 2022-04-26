@@ -12,6 +12,7 @@ import androidx.core.content.FileProvider
 import java.io.File
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 fun Context.openCamera(cameraResultLauncher: ActivityResultLauncher<Intent>): Uri {
     val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -48,6 +49,12 @@ fun String.getTheDay(calendar: Calendar): String {
     val day = calendar[Calendar.DATE]
     val month = calendar[Calendar.MONTH] + 1
     val year = calendar[Calendar.YEAR]
-    val date = "$day.${month}.$year"
-    return date
+    return "$day.${month}.$year"
+}
+
+fun String.getTheDayWithSeparate(calendar: Calendar): ArrayList<Int> {
+    val day = calendar[Calendar.DATE]
+    val month = calendar[Calendar.MONTH] + 1
+    val year = calendar[Calendar.YEAR]
+    return arrayListOf(day, month, year)
 }
