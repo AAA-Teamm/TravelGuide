@@ -1,5 +1,6 @@
 package com.ateam.travelguide.presentation.ui.fragment.location_visit_history
 
+import android.app.DatePickerDialog
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -16,22 +17,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.FragmentLocationVisitHistoryBinding
+import com.ateam.travelguide.model.VisitHistory
 import com.ateam.travelguide.presentation.adapter.VisitHistoryImageListAdapter
+import com.ateam.travelguide.util.*
 import com.ateam.travelguide.util.Constant.REQ_CODE_CAMERA
 import com.ateam.travelguide.util.Constant.REQ_CODE_GALLERY
 import com.ateam.travelguide.util.Permissions.Companion.cameraRequestList
 import com.ateam.travelguide.util.Permissions.Companion.checkCameraPermission
 import com.ateam.travelguide.util.Permissions.Companion.checkGalleryPermission
 import com.ateam.travelguide.util.Permissions.Companion.galleryRequestList
-import com.ateam.travelguide.util.VisitHistoryImagesClickListener
-import com.ateam.travelguide.util.openCamera
-import com.ateam.travelguide.util.openGallery
-import com.ateam.travelguide.util.openSettings
+import java.util.*
 
 class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener {
 
     private var _binding: FragmentLocationVisitHistoryBinding? = null
     private val binding get() = _binding!!
+    private val calendar: Calendar = Calendar.getInstance()
     private lateinit var adapter: VisitHistoryImageListAdapter
     private lateinit var viewModel: LocationVisitHistoryViewModel
     private lateinit var imageList: ArrayList<Uri>
@@ -57,13 +58,32 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
         imageList = ArrayList()
         imageList.add(Uri.EMPTY)
 
+        val today = String().getTheDay(calendar)
+        binding.textViewDate.text = today
+        initClickListeners()
+
         adapter = VisitHistoryImageListAdapter(this)
         updateImageListInRecycler(imageList)
+
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun initClickListeners() {
+        binding.buttonAddVisit.setOnClickListener {
+            // todo "update object with real data (like historyLocationId)"
+            val visitHistory = VisitHistory(
+                id = 0,
+                year = calendar[Calendar.YEAR],
+                month = calendar[Calendar.MONTH] + 1,
+                day = calendar[Calendar.DATE],
+                longDescription = binding.editTextDescription.text.toString(),
+                historyLocationId = 1
+            )
+            viewModel.addVisitHistory(requireContext(), visitHistory)
+        }
+
+        binding.cardViewVisitDate.setOnClickListener {
+            showCalender()
+        }
     }
 
     override fun onClickedDeleteButton(position: Int) {
@@ -80,7 +100,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
         adb.setTitle(getString(R.string.where_are_you_want_to_upload_image_from))
         adb.setPositiveButton(getString(R.string.camera)) { _, _ ->
             if (checkCameraPermission(requireContext())) {
-                requireContext().openCamera(cameraResultLauncher)
+                imageUri = requireContext().openCamera(cameraResultLauncher)
             } else {
                 requestPermissions(cameraRequestList.toTypedArray(), REQ_CODE_CAMERA)
             }
@@ -106,11 +126,14 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private var cameraResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
+                println(it.data!!.data)
                 imageList.add(imageUri)
                 updateImageListInRecycler(imageList)
-                Toast.makeText(requireContext(),
+                Toast.makeText(
+                    requireContext(),
                     getString(R.string.image_taken),
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -161,7 +184,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
         } else {
             when (requestCode) {
                 REQ_CODE_CAMERA -> {
-                    requireContext().openCamera(cameraResultLauncher)
+                    imageUri = requireContext().openCamera(cameraResultLauncher)
                 }
                 REQ_CODE_GALLERY -> {
                     requireContext().openGallery(galleryResultLauncher)
@@ -183,6 +206,32 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
                 imageList.add(Uri.EMPTY)
             }
         }
+    }
+
+    private fun showCalender() {
+        val dateListener =
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfYear)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                val date = "$dayOfMonth.${monthOfYear + 1}.$year"
+                binding.textViewDate.text = date
+            }
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            dateListener,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePickerDialog.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

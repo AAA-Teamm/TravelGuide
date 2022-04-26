@@ -11,13 +11,15 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.FileProvider
 import java.io.File
 import java.io.IOException
+import java.util.*
 
-fun Context.openCamera(cameraResultLauncher: ActivityResultLauncher<Intent>) {
+fun Context.openCamera(cameraResultLauncher: ActivityResultLauncher<Intent>): Uri {
     val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
     val file = createImageFile()
-    val imageUri = FileProvider.getUriForFile(this, this.packageName, file)
+    val imageUri = FileProvider.getUriForFile(this, packageName, file)
     intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
     cameraResultLauncher.launch(intent)
+    return imageUri
 }
 
 fun Context.openGallery(galleryResultLauncher: ActivityResultLauncher<Intent>) {
@@ -40,4 +42,12 @@ fun Activity.openSettings() {
     val uri = Uri.fromParts("package", this.packageName, null)
     intent.data = uri
     startActivity(intent)
+}
+
+fun String.getTheDay(calendar: Calendar): String {
+    val day = calendar[Calendar.DATE]
+    val month = calendar[Calendar.MONTH] + 1
+    val year = calendar[Calendar.YEAR]
+    val date = "$day.${month}.$year"
+    return date
 }
