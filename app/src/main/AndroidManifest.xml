@@ -24,16 +24,18 @@
             android:authorities="com.ateam.travelguide"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
             android:name=".presentation.ui.activity.MainActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".presentation.ui.activity.AddActivity" />
+        <activity
+            android:name=".presentation.ui.activity.LocationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.ui.activity.AddActivity" />
     </application>
 
 </manifest>
