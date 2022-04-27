@@ -8,17 +8,19 @@
     tools:context=".presentation.ui.fragment.add_location.AddNewLocationFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarAddLoc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue"
         android:minHeight="?attr/actionBarSize"
+        android:paddingEnd="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:ignore="RtlSymmetry">
 
         <ImageView
             android:id="@+id/imageViewBackNavigation"
@@ -28,15 +30,17 @@
             android:src="@drawable/ic_back_arrow" />
 
         <TextView
-            android:id="@+id/toolbarTitle"
+            android:id="@+id/toolbarAddLocationTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="?attr/actionBarSize"
             android:gravity="center"
             android:maxLines="2"
+            android:text="@string/add_location"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_24_sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            tools:layout_editor_absoluteX="48dp"
+            tools:layout_editor_absoluteY="12dp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -50,10 +54,10 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/toolbarAddLoc"
         tools:listitem="@layout/add_image_row" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonAddLocationMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,6 +66,8 @@
         android:background="@drawable/blue_button_background"
         android:minHeight="0dp"
         android:paddingHorizontal="17dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="4dp"
         android:text="@string/add_location_in_map"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -85,44 +91,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewLocationPriority"
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/customSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="18dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/white"
-                app:cardCornerRadius="6dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="9dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <Spinner
-                        android:id="@+id/spinnerPriority"
-                        android:layout_width="0dp"
-                        android:layout_height="16dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_weight="1"
-                        android:background="#FFFFFF" />
-
-                    <ImageView
-                        android:id="@+id/imageViewPriority"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginStart="83dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/circle_background"
-                        android:backgroundTint="@color/blue"
-                        android:contentDescription="@null" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewLocationName"
@@ -214,9 +189,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="14dp"
-                        android:autofillHints="@null"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="9dp"
+                        android:autofillHints="@null"
                         android:background="@color/white"
                         android:hint="@string/add_desc_info"
                         android:inputType="text"
@@ -286,12 +261,12 @@
 
             </androidx.cardview.widget.CardView>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonAddLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="44dp"
-                android:layout_marginTop="133dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginEnd="47dp"
                 android:layout_marginBottom="17dp"
                 android:background="@drawable/blue_button_background"

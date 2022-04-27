@@ -13,4 +13,7 @@
     <string name="add_location_name">Yer adı giriniz</string>
     <string name="add_desc_info">Tanım bilgisi giriniz</string>
     <string name="add_long_desc">Kısa açıklama giriniz</string>
+    <string name="add_location">Yer Ekle</string>
+    <string name="choose_map">Konum Seç</string>
+    <string name="select_priority">Öncelik Seç</string>
 </resources>

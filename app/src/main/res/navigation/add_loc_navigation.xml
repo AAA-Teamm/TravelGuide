@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_loc_navigation"
+    app:startDestination="@id/addNewLocationFragment">
+
+    <fragment
+        android:id="@+id/addNewLocationFragment"
+        android:name="com.ateam.travelguide.presentation.ui.fragment.add_location.AddNewLocationFragment"
+        android:label="fragment_add_new_location"
+        tools:layout="@layout/fragment_add_new_location" >
+        <action
+            android:id="@+id/action_addNewLocationFragment_to_addLocationInMapFragment"
+            app:destination="@id/addLocationInMapFragment" />
+        <argument
+            android:name="lat"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="long"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addLocationInMapFragment"
+        android:name="com.ateam.travelguide.presentation.ui.fragment.add_location_in_map.AddLocationInMapFragment"
+        android:label="fragment_add_location_in_map"
+        tools:layout="@layout/fragment_add_location_in_map" >
+        <action
+            android:id="@+id/action_addLocationInMapFragment_to_addNewLocationFragment"
+            app:destination="@id/addNewLocationFragment"
+            app:popUpTo="@id/addLocationInMapFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>
