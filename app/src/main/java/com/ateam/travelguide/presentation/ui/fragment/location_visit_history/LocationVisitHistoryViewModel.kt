@@ -16,7 +16,7 @@ class LocationVisitHistoryViewModel : ViewModel() {
         VisitHistoryOperation(context).addVisitHistory(visitHistory)
     }
 
-    fun getAllImage(context: Context, locationId: Int): ArrayList<Image> {
+    fun getAllImage(context: Context, locationId: Int): ArrayList<Image?> {
         return ImageOperation(context).getAllImage(locationId)
     }
 

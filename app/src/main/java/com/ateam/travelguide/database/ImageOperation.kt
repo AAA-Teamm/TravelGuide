@@ -51,8 +51,8 @@ class ImageOperation(context: Context) {
     }
 
     @SuppressLint("Range")
-    fun getAllImage(locationId: Int): ArrayList<Image> {
-        val imageList = ArrayList<Image>()
+    fun getAllImage(locationId: Int): ArrayList<Image?> {
+        val imageList = ArrayList<Image?>()
 
         open()
         val c: Cursor = getAllImageQuery(locationId)

@@ -12,9 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.FragmentLocationDetailBinding
+import com.ateam.travelguide.model.Image
 import com.ateam.travelguide.model.Location
+import com.ateam.travelguide.model.VisitHistory
 import com.ateam.travelguide.presentation.adapter.VisitHistoryAdapter
 import com.ateam.travelguide.util.Constant.LOCATION_ID
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 
 class LocationDetailFragment : Fragment() {
 
@@ -23,6 +27,8 @@ class LocationDetailFragment : Fragment() {
     private lateinit var adapter: VisitHistoryAdapter
     private lateinit var viewModel: LocationDetailViewModel
     private var locationInfo: Location? = null
+    private var locationVisitHistory: ArrayList<VisitHistory?> = ArrayList()
+    private var locationImages: ArrayList<Image?> = ArrayList()
     private var locationId: Int? = null
 
     override fun onCreateView(
@@ -66,8 +72,16 @@ class LocationDetailFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        initUi()
+    }
+
     private fun initUi() {
         locationInfo = viewModel.getLocationInfo(requireContext(), locationId!!)
+        locationVisitHistory =
+            viewModel.getAllVisitHistoryForSelectedLocation(requireContext(), locationId!!)
+        locationImages = viewModel.getImageListForSelectedLocation(requireContext(), locationId!!)
 
         // todo "we will be update this line"
         locationInfo?.let {
@@ -102,12 +116,23 @@ class LocationDetailFragment : Fragment() {
                 imageViewPriority.background = buttonDrawable
             }
         }
+
+        if (locationImages[0] != null) {
+            val sliderImageList = ArrayList<SlideModel>()
+            locationImages.forEach {
+                sliderImageList.add(SlideModel(it!!.uri, ScaleTypes.FIT))
+            }
+            binding.imageSlider.setImageList(sliderImageList)
+        } else {
+            binding.imageSlider.setImageList(arrayListOf(SlideModel("")))
+        }
+
     }
 
     private fun initVisitHistoryRecycler() {
         // todo "update id for selected location"
         adapter.visitHistoryList =
-            viewModel.getAllVisitHistoryForSelectedLocation(requireContext(), locationId!!)
+            viewModel.getAllVisitHistoryForSelectedLocation(requireContext(), locationId!!).toList()
         binding.recyclerViewVisitHistory.adapter = adapter
     }
 

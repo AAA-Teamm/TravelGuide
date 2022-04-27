@@ -18,5 +18,4 @@
     <color name="default_page_background_color">#E9EAE9</color>
     <color name="default_text_color">@color/gray</color>
     <color name="default_text_color_light">@color/gray_light</color>
-    <color name="gray_circle_image">#C8C8C8</color>
 </resources>

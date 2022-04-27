@@ -2,6 +2,8 @@ package com.ateam.travelguide.presentation.ui.fragment.location_detail
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.ateam.travelguide.database.ImageOperation
+import com.ateam.travelguide.model.Image
 import com.ateam.travelguide.model.Location
 import com.ateam.travelguide.model.VisitHistory
 
@@ -24,9 +26,9 @@ class LocationDetailViewModel : ViewModel() {
         return locationInfo
     }
 
-    fun getAllVisitHistoryForSelectedLocation(context: Context, id: Int): ArrayList<VisitHistory> {
+    fun getAllVisitHistoryForSelectedLocation(context: Context, id: Int): ArrayList<VisitHistory?> {
         // todo "we will be delete mock list"
-        val visitHistoryList = arrayListOf(
+        val visitHistoryList: ArrayList<VisitHistory?> = arrayListOf(
             VisitHistory(0, 2022, 12, 1, "long desc", 1),
             VisitHistory(0, 2022, 12, 1, "long desc", 1),
             VisitHistory(0, 2022, 12, 1, "long desc", 1),
@@ -37,6 +39,10 @@ class LocationDetailViewModel : ViewModel() {
         // todo "we will use this line for visitHistory list"
         //return VisitHistoryOperation(context).getAllVisitHistory(id)
         return visitHistoryList
+    }
+
+    fun getImageListForSelectedLocation(context: Context, id: Int): ArrayList<Image?> {
+        return ImageOperation(context).getAllImage(id)
     }
 
 }
