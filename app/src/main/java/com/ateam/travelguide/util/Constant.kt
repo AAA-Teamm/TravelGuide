@@ -2,6 +2,12 @@ package com.ateam.travelguide.util
 
 object Constant {
 
+    const val REQ_CODE_CAMERA = 0
+    const val REQ_CODE_GALLERY = 1
+
+    const val NO_IMAGE_FEATURE = "no_image"
+    const val LOCATION_ID = "location_id"
+
     const val DATABASE_NAME = "TravelGuideDatabase"
     const val LOCATION_TABLE = "location_table"
     const val IMAGE_TABLE = "image_table"
