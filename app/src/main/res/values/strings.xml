@@ -19,4 +19,12 @@
     <string name="settings">Ayarlar</string>
     <string name="cancel">Vazgeç</string>
     <string name="write_description">Açıklama Giriniz!</string>
+    <string name="add_location_in_map">Konum Ekle</string>
+    <string name="location_name">Yer Adı</string>
+    <string name="add_location_name">Yer adı giriniz</string>
+    <string name="add_desc_info">Tanım bilgisi giriniz</string>
+    <string name="add_long_desc">Kısa açıklama giriniz</string>
+    <string name="add_location">Yer Ekle</string>
+    <string name="choose_map">Konum Seç</string>
+    <string name="select_priority">Öncelik Seç</string>
 </resources>
