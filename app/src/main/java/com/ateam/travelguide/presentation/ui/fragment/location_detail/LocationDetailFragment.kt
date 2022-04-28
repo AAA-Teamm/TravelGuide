@@ -150,9 +150,14 @@ class LocationDetailFragment : Fragment() {
     }
 
     private fun initVisitHistoryRecycler() {
-        adapter.visitHistoryList =
-            viewModel.getAllVisitHistoryForSelectedLocation(requireContext(), locationId!!).toList()
-        binding.recyclerViewVisitHistory.adapter = adapter
+        if (locationVisitHistory[0] != null) {
+            adapter.visitHistoryList = viewModel
+                .getAllVisitHistoryForSelectedLocation(requireContext(), locationId!!).toList()
+            binding.recyclerViewVisitHistory.adapter = adapter
+        } else {
+            binding.textViewVisitHistory.visibility = View.GONE
+            binding.recyclerViewVisitHistory.visibility = View.GONE
+        }
     }
 
     private fun showImageInFullScreenMode(image: Image) {
