@@ -16,11 +16,13 @@
         <argument
             android:name="lat"
             app:argType="string"
-            app:nullable="true" />
+            app:nullable="true"
+            android:defaultValue=""/>
         <argument
             android:name="long"
             app:argType="string"
-            app:nullable="true" />
+            app:nullable="true"
+            android:defaultValue=""/>
     </fragment>
     <fragment
         android:id="@+id/addLocationInMapFragment"

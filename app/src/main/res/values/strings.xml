@@ -27,4 +27,7 @@
     <string name="add_location">Yer Ekle</string>
     <string name="choose_map">Konum Seç</string>
     <string name="select_priority">Öncelik Seç</string>
+    <string name="map_required">Konum Bilgisi Gerekli!</string>
+    <string name="add_map_to_save_location">Yer bilgisini kaydetmek için konum bilgisi girilmesi zorunludur!</string>
+    <string name="okey">Tamam</string>
 </resources>

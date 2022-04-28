@@ -7,20 +7,20 @@ data class Priority( val id: Int, val image : Int, val priorityName : String)
 class PriorityUtil {
 
     private val priorityId = intArrayOf(
-        0,
         1,
+        0,
         2
     )
 
     private val images = intArrayOf(
-        R.color.green_circle_image,
         R.color.blue_circle_image,
+        R.color.green_circle_image,
         R.color.gray_circle_image
     )
 
     private val priorities = arrayOf(
-        "Öncelik 1",
         "Öncelik 2",
+        "Öncelik 1",
         "Öncelik 3"
     )
 
