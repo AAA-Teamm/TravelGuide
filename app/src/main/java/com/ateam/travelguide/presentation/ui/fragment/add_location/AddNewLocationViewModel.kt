@@ -23,6 +23,10 @@ class AddNewLocationViewModel : ViewModel(){
         return ImageOperation(context).getAllImage(locationId)
     }
 
+    fun addNewImagesToDatabase(context: Context, image: Image) {
+        ImageOperation(context).addImage(image)
+    }
+
     fun getNextId(context : Context) : Int{
         val locationList = LocationOperation(context).getNumOfAllLocation()
         return if(locationList.size == 0) 0

@@ -9,27 +9,15 @@ import com.ateam.travelguide.model.Location
 
 class MainViewModel: ViewModel() {
 
-   /* fun getFirstImage(context : Context, locationId : Int) : Image? {
+    fun getFirstImage(context : Context, locationId : Int) : Image? {
         val imageList = ImageOperation(context).getAllImage(locationId)
-        return if(!imageList.isEmpty())
+        return if(imageList.isNotEmpty())
             imageList.first()
         else null
     }
 
     fun getAllLocation(context: Context, visitStatus: Boolean) : ArrayList<Location> {
         return LocationOperation(context).getAllLocation(visitStatus)
-    }*/
-
-    fun getAllLocation(context: Context, visitStatus: Boolean) : ArrayList<Location> {
-        val locations = arrayListOf(
-            Location(0,"a","","","",0,true,"",""),              Location(0,"b","","","",1,true,"",""),
-            Location(0,"b","12.02.2002","","",2,true,"","")
-        )
-        return locations
-    }
-
-    fun getFirstImage(context : Context, locationId : Int) : Image? {
-        return null
     }
 
 }

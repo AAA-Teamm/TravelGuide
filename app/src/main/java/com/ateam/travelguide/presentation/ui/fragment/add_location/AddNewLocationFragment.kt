@@ -110,7 +110,12 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
                         longitude = args.long!!
                     )
 
-                    viewModel.addImages(requireContext(),imageList)
+                    for (i in 0 until imageList.size) {
+                        imageList[i]?.let {
+                            viewModel.addNewImagesToDatabase(requireContext(), it)
+                        }
+                    }
+
                     viewModel.addNewLocation(requireContext(),location)
                     requireActivity().finish()
                 }
@@ -144,7 +149,8 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
                 val selectedPriObj = parent!!.getItemAtPosition(position).toString()
 
                 if(selectedPriObj.contains("Öncelik 0")) prioritySelection = 0
-                else if(selectedPriObj.contains("Öncelik 1")) prioritySelection = 0
+                else if(selectedPriObj.contains("Öncelik 1")) prioritySelection = 1
+                else prioritySelection = 2
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

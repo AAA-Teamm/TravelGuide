@@ -1,6 +1,7 @@
 package com.ateam.travelguide.util
 
 import android.content.Context
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -50,14 +51,14 @@ class ToBeTravelledViewHolder (itemView : View, itemClick : ((position : Int)->U
             2 ->ivImportance.setImageResource(R.drawable.circle_background_gray)
         }
 
+        image?.let {
+            if (it.uri == Constant.NO_IMAGE_FEATURE) {
+                ivLocationPicture.setImageResource(R.drawable.union)
+            } else {
+                ivLocationPicture.setImageURI(image.uri!!.toUri())
 
-
-
-        if(image == null) ivLocationPicture.setImageResource(R.drawable.union)
-
-        else ivLocationPicture.setImageURI(image.uri!!.toUri())
-
-
+            }
+        }
 
     }
 
