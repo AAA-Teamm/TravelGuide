@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/dm_sans"
         android:gravity="center_horizontal|center_vertical"
-        android:text="Gezi \nRehberim"
+        android:text="@string/Splash"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"

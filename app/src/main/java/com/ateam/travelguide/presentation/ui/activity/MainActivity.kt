@@ -1,9 +1,6 @@
 package com.ateam.travelguide.presentation.ui.activity
-
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.ateam.travelguide.databinding.ActivityMainBinding
@@ -26,26 +23,14 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this, AddActivity::class.java)
 
-            resultLauncher.launch(intent)
+            startActivity(intent)
         }
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        // liste guncellemesi ve adapter a listenin verilmesi veee adapterin recycler a verilmesi
-    }
 
-    var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ::duzenleResult)
 
-    fun duzenleResult(result: ActivityResult) {
 
-        if (result.resultCode == RESULT_OK) {
-            //binding.rvToB.adapter!!.notifyDataSetChanged()
-        }
-
-    }
 
     private fun createTab() {
 
@@ -72,9 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-
     }
-
 }
 
 

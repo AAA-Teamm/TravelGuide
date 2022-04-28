@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ateam.travelguide.R
 import com.ateam.travelguide.model.Image
 import com.ateam.travelguide.model.Location
+import com.ateam.travelguide.util.Constant.NO_IMAGE_FEATURE
 
 class TravelledViewHolder (itemView: View, itemClick : ((position : Int)->Unit)) : RecyclerView.ViewHolder(itemView){
 
@@ -30,19 +31,20 @@ class TravelledViewHolder (itemView: View, itemClick : ((position : Int)->Unit))
     }
 
     fun bindData(context : Context, location: Location, image: Image?)
-
     {
         tvLocationName.text = location.name
         tvShortDetail.text = location.shortDescription
         tvLongDetail.text = location.longDescription
         tvDate.text = location.date
 
-        if(image == null) ivLocationPicture.setImageResource(R.drawable.union)
-        else ivLocationPicture.setImageURI(image.uri!!.toUri())
+        image?.let {
+            if (it.uri == NO_IMAGE_FEATURE) {
+                ivLocationPicture.setImageResource(R.drawable.union)
+            } else {
+                ivLocationPicture.setImageURI(image.uri!!.toUri())
 
-
-
+            }
+        }
     }
-
 
 }
