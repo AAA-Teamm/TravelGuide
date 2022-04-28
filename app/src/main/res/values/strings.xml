@@ -27,4 +27,6 @@
     <string name="add_location">Yer Ekle</string>
     <string name="choose_map">Konum Seç</string>
     <string name="select_priority">Öncelik Seç</string>
+    <string name="toBeTravelled">Gezilecekler</string>
+    <string name="travelled">Gezdiklerim</string>
 </resources>

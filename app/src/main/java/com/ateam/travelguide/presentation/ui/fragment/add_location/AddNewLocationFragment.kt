@@ -16,7 +16,6 @@ import com.ateam.travelguide.util.PriorityUtil
 import com.ateam.travelguide.util.VisitHistoryImagesClickListener
 import com.google.android.gms.maps.model.LatLng
 
-
 class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
 
     private var _binding: FragmentAddNewLocationBinding? = null
@@ -44,6 +43,7 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
     }
 
     private fun initView() {
+        imageList = ArrayList()
         adapter = VisitHistoryImageListAdapter(this)
         adapter.imageList = imageList
         binding.recyclerView.adapter = adapter
