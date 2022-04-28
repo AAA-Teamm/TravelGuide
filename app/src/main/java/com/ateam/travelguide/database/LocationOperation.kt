@@ -83,6 +83,39 @@ class LocationOperation(context: Context) {
         return locationList
     }
 
+    private fun getNumOfLocations(): Cursor {
+        val query = "SELECT * FROM $LOCATION_TABLE"
+        return travelGuideDatabase!!.rawQuery(query, null)
+    }
+
+    @SuppressLint("Range")
+    fun getNumOfAllLocation(): ArrayList<Location> {
+        val locationList = ArrayList<Location>()
+
+        open()
+        val c: Cursor = getNumOfLocations()
+
+        if (c.moveToFirst()) {
+            do {
+                val location = Location(
+                    id = c.getInt(0),
+                    name = c.getStringOrNull(c.getColumnIndex(LOCATION_NAME)),
+                    date = c.getStringOrNull(c.getColumnIndex(LOCATION_DATE)),
+                    shortDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_SHORT_DESCRIPTION)),
+                    longDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_LONG_DESCRIPTION)),
+                    priority = c.getIntOrNull(c.getColumnIndex(LOCATION_PRIORITY)),
+                    visitStatus = c.getString(c.getColumnIndex(LOCATION_VISIT_STATUS)).equals("True"),
+                    latitude = c.getString(c.getColumnIndex(LOCATION_LATITUDE)),
+                    longitude = c.getString(c.getColumnIndex(LOCATION_LONGITUDE))
+                )
+                locationList.add(location)
+            } while (c.moveToNext())
+        }
+
+        close()
+        return locationList
+    }
+
     private fun getSelectedLocatinQuery(id: Int): Cursor {
         val query = "SELECT * FROM $LOCATION_TABLE WHERE id = ?"
         return travelGuideDatabase!!.rawQuery(query, arrayOf(id.toString()))
