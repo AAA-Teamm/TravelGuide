@@ -51,8 +51,13 @@ class LocationOperation(context: Context) {
     }
 
     private fun getAllLocationQuery(visitStatus: Boolean): Cursor {
+        val visitStatusState: Int = if (visitStatus) {
+            1
+        } else {
+            0
+        }
         val query = "SELECT * FROM $LOCATION_TABLE WHERE $LOCATION_VISIT_STATUS = ?"
-        return travelGuideDatabase!!.rawQuery(query, arrayOf(visitStatus.toString()))
+        return travelGuideDatabase!!.rawQuery(query, arrayOf(visitStatusState.toString()))
     }
 
     @SuppressLint("Range")

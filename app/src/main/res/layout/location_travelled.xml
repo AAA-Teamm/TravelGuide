@@ -38,7 +38,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@drawable/union" />
+        tools:srcCompat="@drawable/union"
+        android:contentDescription="@null"/>
 
     <TextView
         android:id="@+id/tvLocationName"
@@ -47,7 +48,7 @@
         android:layout_marginStart="16dp"
         android:fontFamily="@font/dm_sans"
         android:maxLines="1"
-        android:text="Yer Adı"
+        android:text=""
         android:textColor="@color/default_text_color"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -65,7 +66,7 @@
         android:layout_marginEnd="26dp"
         android:fontFamily="@font/dm_sans"
         android:maxLines="1"
-        android:text="Yer Kısa Tanım"
+        android:text=""
         android:textColor="@color/default_text_color"
         android:textSize="10sp"
         android:textStyle="bold"
@@ -84,7 +85,7 @@
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/dm_sans"
         android:maxLines="3"
-        android:text="En fazla 3 Satır En fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 Satır"
+        android:text=""
         android:textColor="@color/default_text_color_light"
         android:textSize="10sp"
         android:textStyle="bold"

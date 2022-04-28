@@ -32,4 +32,6 @@
     <string name="map_required">Konum Bilgisi Gerekli!</string>
     <string name="add_map_to_save_location">Yer bilgisini kaydetmek için konum bilgisi girilmesi zorunludur!</string>
     <string name="okey">Tamam</string>
+    <string name="Splash">Gezi \nRehberim</string>
+
 </resources>
