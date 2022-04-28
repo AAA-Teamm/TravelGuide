@@ -10,9 +10,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         android:background="@color/blue"
-        android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -160,7 +159,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/buttonAddVisit"
+        android:id="@+id/buttonSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"

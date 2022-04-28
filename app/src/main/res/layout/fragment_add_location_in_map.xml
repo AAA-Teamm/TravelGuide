@@ -10,9 +10,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarAddMap"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         android:background="@color/blue"
-        android:minHeight="?attr/actionBarSize"
         android:paddingEnd="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -32,6 +31,7 @@
             android:id="@+id/addLocationMapTittle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="?attr/actionBarSize"
             android:gravity="center"
             android:maxLines="2"
             android:text="@string/choose_map"
