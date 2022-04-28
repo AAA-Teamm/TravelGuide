@@ -11,7 +11,7 @@ import com.ateam.travelguide.model.VisitHistory
 
 class LocationDetailViewModel : ViewModel() {
 
-    fun getLocationInfo(context: Context, id: Int): Location? {
+    fun getLocationInfo(context: Context, id: Int): Location {
         return LocationOperation(context).getSelectedLocation(id)
     }
 

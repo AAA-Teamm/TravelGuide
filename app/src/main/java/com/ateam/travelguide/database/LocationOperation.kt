@@ -127,7 +127,7 @@ class LocationOperation(context: Context) {
     }
 
     @SuppressLint("Range")
-    fun getSelectedLocation(id: Int): Location? {
+    fun getSelectedLocation(id: Int): Location {
         var location: Location? = null
         open()
         val c: Cursor = getSelectedLocatinQuery(id)
@@ -146,7 +146,7 @@ class LocationOperation(context: Context) {
         }
 
         close()
-        return location
+        return location!!
     }
 
 }
