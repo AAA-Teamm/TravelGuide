@@ -41,7 +41,6 @@ class ToBeTravelled : Fragment() {
         for (location in locationList) {
             val image = viewModel.getFirstImage(requireContext(), location.id)
             image?.let {
-                println(it.uri)
                 pairlist.add(Pair(location, it))
             }
         }

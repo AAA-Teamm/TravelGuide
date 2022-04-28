@@ -113,6 +113,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
                     viewModel.addNewImagesToDatabase(requireContext(), it)
                 }
             }
+            viewModel.updateTravelState(requireContext(), locationId)
             findNavController().popBackStack()
         }
 

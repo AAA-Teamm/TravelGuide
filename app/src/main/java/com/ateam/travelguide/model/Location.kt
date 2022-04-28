@@ -7,7 +7,7 @@ data class Location(
     val shortDescription: String?,
     val longDescription: String?,
     val priority: Int?,
-    val visitStatus: Boolean = false,
+    val visitStatus: String = "false",
     val latitude: String,
     val longitude: String
 )

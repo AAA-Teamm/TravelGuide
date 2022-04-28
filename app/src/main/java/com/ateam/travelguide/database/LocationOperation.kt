@@ -22,7 +22,8 @@ import com.ateam.travelguide.util.Constant.LOCATION_VISIT_STATUS
 class LocationOperation(context: Context) {
 
     private var travelGuideDatabase: SQLiteDatabase? = null
-    private var dbOpenHelper: DatabaseOpenHelper = DatabaseOpenHelper(context, DATABASE_NAME, null, 1)
+    private var dbOpenHelper: DatabaseOpenHelper =
+        DatabaseOpenHelper(context, DATABASE_NAME, null, 1)
 
     private fun open() {
         travelGuideDatabase = dbOpenHelper.writableDatabase
@@ -34,7 +35,7 @@ class LocationOperation(context: Context) {
         }
     }
 
-    fun addLocation(location : Location) {
+    fun addLocation(location: Location) {
         val cv = ContentValues()
         cv.put(LOCATION_NAME, location.name)
         cv.put(LOCATION_DATE, location.date)
@@ -51,13 +52,13 @@ class LocationOperation(context: Context) {
     }
 
     private fun getAllLocationQuery(visitStatus: Boolean): Cursor {
-        val visitStatusState: Int = if (visitStatus) {
-            1
+        val visitStatusState: String = if (visitStatus) {
+            "true"
         } else {
-            0
+            "false"
         }
         val query = "SELECT * FROM $LOCATION_TABLE WHERE $LOCATION_VISIT_STATUS = ?"
-        return travelGuideDatabase!!.rawQuery(query, arrayOf(visitStatusState.toString()))
+        return travelGuideDatabase!!.rawQuery(query, arrayOf(visitStatusState))
     }
 
     @SuppressLint("Range")
@@ -76,7 +77,7 @@ class LocationOperation(context: Context) {
                     shortDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_SHORT_DESCRIPTION)),
                     longDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_LONG_DESCRIPTION)),
                     priority = c.getIntOrNull(c.getColumnIndex(LOCATION_PRIORITY)),
-                    visitStatus = c.getString(c.getColumnIndex(LOCATION_VISIT_STATUS)).equals("True"),
+                    visitStatus = c.getString(c.getColumnIndex(LOCATION_VISIT_STATUS)),
                     latitude = c.getString(c.getColumnIndex(LOCATION_LATITUDE)),
                     longitude = c.getString(c.getColumnIndex(LOCATION_LONGITUDE))
                 )
@@ -109,7 +110,7 @@ class LocationOperation(context: Context) {
                     shortDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_SHORT_DESCRIPTION)),
                     longDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_LONG_DESCRIPTION)),
                     priority = c.getIntOrNull(c.getColumnIndex(LOCATION_PRIORITY)),
-                    visitStatus = c.getString(c.getColumnIndex(LOCATION_VISIT_STATUS)).equals("True"),
+                    visitStatus = c.getString(c.getColumnIndex(LOCATION_VISIT_STATUS)),
                     latitude = c.getString(c.getColumnIndex(LOCATION_LATITUDE)),
                     longitude = c.getString(c.getColumnIndex(LOCATION_LONGITUDE))
                 )
@@ -121,7 +122,7 @@ class LocationOperation(context: Context) {
         return locationList
     }
 
-    private fun getSelectedLocatinQuery(id: Int): Cursor {
+    private fun getSelectedLocationQuery(id: Int): Cursor {
         val query = "SELECT * FROM $LOCATION_TABLE WHERE id = ?"
         return travelGuideDatabase!!.rawQuery(query, arrayOf(id.toString()))
     }
@@ -130,7 +131,7 @@ class LocationOperation(context: Context) {
     fun getSelectedLocation(id: Int): Location {
         var location: Location? = null
         open()
-        val c: Cursor = getSelectedLocatinQuery(id)
+        val c: Cursor = getSelectedLocationQuery(id)
         while (c.moveToNext()) {
             location = Location(
                 id = c.getInt(0),
@@ -139,7 +140,7 @@ class LocationOperation(context: Context) {
                 shortDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_SHORT_DESCRIPTION)),
                 longDescription = c.getStringOrNull(c.getColumnIndex(LOCATION_LONG_DESCRIPTION)),
                 priority = c.getIntOrNull(c.getColumnIndex(LOCATION_PRIORITY)),
-                visitStatus = c.getString(c.getColumnIndex(LOCATION_VISIT_STATUS)).equals("True"),
+                visitStatus = c.getString(c.getColumnIndex(LOCATION_VISIT_STATUS)),
                 latitude = c.getString(c.getColumnIndex(LOCATION_LATITUDE)),
                 longitude = c.getString(c.getColumnIndex(LOCATION_LONGITUDE))
             )
@@ -147,6 +148,17 @@ class LocationOperation(context: Context) {
 
         close()
         return location!!
+    }
+
+    fun updateTravelStateFromDatabase(locationId: Int) {
+        val newState = "true"
+        val values = ContentValues()
+
+        values.put(LOCATION_VISIT_STATUS, newState)
+
+        open()
+        travelGuideDatabase!!.update(LOCATION_TABLE, values, "id=?", arrayOf(locationId.toString()))
+        close()
     }
 
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.FragmentLocationDetailMapsBinding
@@ -51,6 +52,9 @@ class LocationDetailMapsFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
 
         binding.toolbarTitle.text = locationInfo.name
+        binding.imageViewBackNavigation.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.buttonGo.setOnClickListener {
             openMaps(locationInfo.latitude, locationInfo.longitude)
         }

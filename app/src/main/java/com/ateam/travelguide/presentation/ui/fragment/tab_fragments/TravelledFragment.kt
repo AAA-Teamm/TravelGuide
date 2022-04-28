@@ -35,14 +35,13 @@ class TravelledFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        locationList = viewModel.getAllLocation(requireContext(), true)
+        locationList = viewModel.getAllLocation(requireContext(), !false)
 
         val pairlist = ArrayList<Pair<Location, Image?>>()
 
         for (location in locationList) {
             val image = viewModel.getFirstImage(requireContext(), location.id)
             image?.let {
-                println(it.uri)
                 pairlist.add(Pair(location, it))
             }
         }
@@ -56,7 +55,7 @@ class TravelledFragment : Fragment() {
         super.onResume()
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        locationList = viewModel.getAllLocation(requireContext(), true)
+        locationList = viewModel.getAllLocation(requireContext(), !false)
 
 
         val pairlist = ArrayList<Pair<Location, Image?>>()
