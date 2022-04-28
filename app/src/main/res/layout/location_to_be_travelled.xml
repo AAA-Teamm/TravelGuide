@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:layout_marginHorizontal="18dp"
+    android:layout_marginTop="12dp"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/ivLocationPicture"
+        android:layout_width="96dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@drawable/union" />
+
+    <TextView
+        android:id="@+id/tvLocationName"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/dm_sans"
+        android:maxLines="1"
+        android:text="Yer Adı"
+        android:textColor="@color/default_text_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLocationPicture"
+        app:layout_constraintEnd_toStartOf="@+id/ivImportance"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivLocationPicture"
+        app:layout_constraintTop_toTopOf="@+id/ivLocationPicture"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvShortDetail"
+        android:layout_width="0dp"
+        android:layout_height="13dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="26dp"
+        android:fontFamily="@font/dm_sans"
+        android:maxLines="1"
+        android:text="Yer Kısa Tanım"
+        android:textColor="@color/default_text_color"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLocationPicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivLocationPicture"
+        app:layout_constraintTop_toTopOf="@+id/ivLocationPicture"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <TextView
+        android:id="@+id/tvLongDetail"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/dm_sans"
+        android:maxLines="3"
+        android:text="En fazla 3 Satır En fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 SatırEn fazla 3 Satır"
+        android:textColor="@color/default_text_color_light"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLocationPicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivLocationPicture"
+        app:layout_constraintTop_toTopOf="@+id/ivLocationPicture"
+        app:layout_constraintVertical_bias="0.942" />
+
+    <ImageView
+        android:id="@+id/ivImportance"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/circle_background_blue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,4 +6,6 @@
     <string name="location_short_desc">Yer Kısa tanım</string>
     <string name="location_long_desc">Kısa Açıklama</string>
     <string name="visit_history">Ziyaret Geçmişi</string>
+    <string name="toBeTravelled">Gezilecekler</string>
+    <string name="travelled">Gezdiklerim</string>
 </resources>

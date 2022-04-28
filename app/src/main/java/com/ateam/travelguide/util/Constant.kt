@@ -2,6 +2,8 @@ package com.ateam.travelguide.util
 
 object Constant {
 
+    const val SPLASH_SCREEN_TIME = 2500L
+
     const val DATABASE_NAME = "TravelGuideDatabase"
     const val LOCATION_TABLE = "location_table"
     const val IMAGE_TABLE = "image_table"
