@@ -60,7 +60,6 @@ class VisitHistoryImageListAdapter(
             )
             is VisitHistoryViewHolder.AddImageWithDeleteButtonViewHolder -> holder.bind(
                 imageList[position]!!,
-                position,
                 clickListener
             )
         }
