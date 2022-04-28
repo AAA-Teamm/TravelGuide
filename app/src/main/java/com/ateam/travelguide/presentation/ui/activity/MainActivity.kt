@@ -28,10 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
-
-
     private fun createTab() {
 
         val adapter = TabPageAdapter(this, binding.tabLayout.tabCount)
