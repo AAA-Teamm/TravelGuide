@@ -37,7 +37,7 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
     private var lastImageListSize = 0
     private lateinit var imageUri: Uri
     private lateinit var defaultNoImageData: Image
-    private lateinit var imageList: ArrayList<Image>
+    private lateinit var imageList: ArrayList<Image?>
     private var year: Int = 0
     private var month: Int = 0
     private var day: Int = 0
@@ -267,7 +267,7 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
         }
     }
 
-    private fun updateImageListInRecycler(imageList: List<Image>) {
+    private fun updateImageListInRecycler(imageList: List<Image?>) {
         updateAddNewPhotoState()
         adapter.imageList = imageList
         binding.recyclerView.adapter = adapter
@@ -275,7 +275,7 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
 
     private fun updateAddNewPhotoState() {
         for (i in imageList.indices) {
-            if (imageList[i].uri == NO_IMAGE_FEATURE && imageList.size > i) {
+            if (imageList[i]!!.uri == NO_IMAGE_FEATURE && imageList.size > i) {
                 imageList.removeAt(i)
                 if (imageList.size < 10) {
                     imageList.add(defaultNoImageData)
