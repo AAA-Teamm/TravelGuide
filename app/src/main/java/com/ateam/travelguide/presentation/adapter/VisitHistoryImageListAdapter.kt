@@ -29,7 +29,7 @@ class VisitHistoryImageListAdapter(
 
     private var recyclerDiffUtil = AsyncListDiffer(this, diffUtil)
 
-    var imageList: List<Image>
+    var imageList: List<Image?>
         get() = recyclerDiffUtil.currentList
         set(value) = recyclerDiffUtil.submitList(value)
 
@@ -59,8 +59,7 @@ class VisitHistoryImageListAdapter(
                 clickListener
             )
             is VisitHistoryViewHolder.AddImageWithDeleteButtonViewHolder -> holder.bind(
-                imageList[position],
-                position,
+                imageList[position]!!,
                 clickListener
             )
         }
@@ -69,7 +68,7 @@ class VisitHistoryImageListAdapter(
     override fun getItemCount(): Int = imageList.size
 
     override fun getItemViewType(position: Int): Int {
-        return when (imageList[position].uri) {
+        return when (imageList[position]!!.uri) {
             NO_IMAGE_FEATURE -> R.layout.add_image_row
             else -> R.layout.add_image_row_with_delete_button
         }

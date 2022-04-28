@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ateam.travelguide.databinding.VisitHistoryRowBinding
 import com.ateam.travelguide.model.VisitHistory
+import com.ateam.travelguide.util.writeDate
 
 class VisitHistoryAdapter : RecyclerView.Adapter<VisitHistoryAdapter.VisitHistoryViewHolder>() {
 
@@ -22,7 +23,7 @@ class VisitHistoryAdapter : RecyclerView.Adapter<VisitHistoryAdapter.VisitHistor
 
     private var recyclerDiffUtil = AsyncListDiffer(this, diffUtil)
 
-    var visitHistoryList: List<VisitHistory>
+    var visitHistoryList: List<VisitHistory?>
         get() = recyclerDiffUtil.currentList
         set(value) = recyclerDiffUtil.submitList(value)
 
@@ -37,8 +38,7 @@ class VisitHistoryAdapter : RecyclerView.Adapter<VisitHistoryAdapter.VisitHistor
 
     override fun onBindViewHolder(holder: VisitHistoryViewHolder, position: Int) {
         val currentItem = visitHistoryList[position]
-        // todo "we will be update this line"
-        holder.binding.textViewDate.text = "${currentItem.day}.${currentItem.month}.${currentItem.year}"
+        holder.binding.textViewDate.text = String().writeDate(currentItem!!.day!!, currentItem.month!!, currentItem.year!!)
         holder.binding.textViewLongDesc.text = currentItem.longDescription
     }
 

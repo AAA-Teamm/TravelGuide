@@ -1,7 +1,6 @@
 package com.ateam.travelguide.presentation.ui.fragment.location_visit_history
 
 import android.content.Context
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.ateam.travelguide.database.ImageOperation
 import com.ateam.travelguide.database.LocationOperation
@@ -16,7 +15,7 @@ class LocationVisitHistoryViewModel : ViewModel() {
         VisitHistoryOperation(context).addVisitHistory(visitHistory)
     }
 
-    fun getAllImage(context: Context, locationId: Int): ArrayList<Image> {
+    fun getAllImage(context: Context, locationId: Int): ArrayList<Image?> {
         return ImageOperation(context).getAllImage(locationId)
     }
 
@@ -26,6 +25,10 @@ class LocationVisitHistoryViewModel : ViewModel() {
 
     fun getLocationInfo(context: Context, locationId: Int): Location? {
         return LocationOperation(context).getSelectedLocation(locationId)
+    }
+
+    fun deleteAllLocationImages(context: Context, locationId: Int) {
+        ImageOperation(context).deleteLocationImages(locationId)
     }
 
 }

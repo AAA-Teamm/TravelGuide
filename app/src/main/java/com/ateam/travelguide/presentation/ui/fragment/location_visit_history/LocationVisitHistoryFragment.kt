@@ -1,5 +1,6 @@
 package com.ateam.travelguide.presentation.ui.fragment.location_visit_history
 
+import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -15,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.FragmentLocationVisitHistoryBinding
@@ -45,7 +47,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private var lastImageListSize = 0
     private lateinit var adapter: VisitHistoryImageListAdapter
     private lateinit var viewModel: LocationVisitHistoryViewModel
-    private lateinit var imageList: ArrayList<Image>
+    private lateinit var imageList: ArrayList<Image?>
     private lateinit var imageUri: Uri
     private lateinit var defaultNoImageData: Image
     private lateinit var locationInfo: Location
@@ -85,7 +87,6 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
         imageList = viewModel.getAllImage(requireContext(), locationId!!)
         lastImageListSize = imageList.size
 
-        println(imageList.size)
         if (imageList.size < 10) {
             imageList.add(defaultNoImageData)
         }
@@ -96,7 +97,8 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     }
 
     private fun initClickListeners() {
-        binding.buttonAddVisit.setOnClickListener {
+        binding.buttonSave.setOnClickListener {
+            deleteAllLocationImages(locationId!!)
             val visitHistory = VisitHistory(
                 id = 0,
                 year = calendar[Calendar.YEAR],
@@ -106,14 +108,22 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
                 historyLocationId = locationId!!
             )
             viewModel.addVisitHistory(requireContext(), visitHistory)
-            for (i in lastImageListSize until imageList.size - 1) {
-                viewModel.addNewImagesToDatabase(requireContext(), imageList[i])
+            imageList.forEach {
+                if (it != null) {
+                    viewModel.addNewImagesToDatabase(requireContext(), it)
+                }
             }
+            findNavController().popBackStack()
         }
 
         binding.cardViewVisitDate.setOnClickListener {
             showCalender()
         }
+
+        binding.imageViewBackNavigation.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
     }
 
     override fun onClickedDeleteButton(position: Int) {
@@ -146,11 +156,18 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     }
 
     private var galleryResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == AppCompatActivity.RESULT_OK) {
-                val newImage = Image(0, it.data!!.data.toString(), year, month, day, locationId!!)
-                imageList.add(newImage)
-                updateImageListInRecycler(imageList)
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val intentFromResult = result.data
+                if (intentFromResult != null) {
+                    val imageData = intentFromResult.data
+                    if (imageData != null) {
+                        val newImage =
+                            Image(0, imageData.toString(), year, month, day, locationId!!)
+                        imageList.add(newImage)
+                        updateImageListInRecycler(imageList)
+                    }
+                }
             }
         }
 
@@ -224,7 +241,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
         }
     }
 
-    private fun updateImageListInRecycler(imageList: List<Image>) {
+    private fun updateImageListInRecycler(imageList: List<Image?>) {
         updateAddNewPhotoState()
         adapter.imageList = imageList
         binding.recyclerView.adapter = adapter
@@ -232,7 +249,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
 
     private fun updateAddNewPhotoState() {
         for (i in imageList.indices) {
-            if (imageList[i].uri == NO_IMAGE_FEATURE && imageList.size > i) {
+            if (imageList[i]!!.uri == NO_IMAGE_FEATURE && imageList.size > i) {
                 imageList.removeAt(i)
                 if (imageList.size < 10) {
                     imageList.add(defaultNoImageData)
@@ -263,6 +280,10 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
         )
 
         datePickerDialog.show()
+    }
+
+    private fun deleteAllLocationImages(locationId: Int) {
+        viewModel.deleteAllLocationImages(requireContext(), locationId)
     }
 
     override fun onDestroyView() {

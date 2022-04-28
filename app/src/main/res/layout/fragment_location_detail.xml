@@ -14,9 +14,8 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="58dp"
             android:background="@color/blue"
-            android:minHeight="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,12 +43,14 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <ImageView
+        <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/imageSlider"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="250dp"
-            android:contentDescription="@null"
-            android:src="@color/black"
+            app:iss_auto_cycle="true"
+            app:iss_delay="0"
+            app:iss_error_image="@drawable/error"
+            app:iss_period="2000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.ateam.travelguide.R
 import com.ateam.travelguide.databinding.FragmentAddNewLocationBinding
+import com.ateam.travelguide.model.Image
 import com.ateam.travelguide.presentation.adapter.PriorityAdapter
 import com.ateam.travelguide.presentation.adapter.VisitHistoryImageListAdapter
 import com.ateam.travelguide.util.PriorityUtil
@@ -21,7 +22,7 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
     private var _binding: FragmentAddNewLocationBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: VisitHistoryImageListAdapter
-    private lateinit var imageList: ArrayList<Int>
+    private lateinit var imageList: ArrayList<Image>
     private var mapCoordinate : LatLng? = null
     private val args : AddNewLocationFragmentArgs by navArgs()
 
@@ -36,14 +37,6 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        // todo "we will be delete mock data"
-        // todo "dont forget to give the data list as URI"
-        imageList = ArrayList()
-        imageList.add(R.drawable.ic_launcher_background)
-        imageList.add(R.drawable.ic_launcher_foreground)
-        imageList.add(-1)
 
         initView()
         initClickListeners()
@@ -95,7 +88,7 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
         }*/
     }
 
-    override fun onClickedDeleteButton() {
+    override fun onClickedDeleteButton(position: Int) {
         TODO("Not yet implemented")
     }
 
