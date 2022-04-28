@@ -19,7 +19,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
+            android:value="AIzaSyCN4ocbk0IBwXenj2MRF60N8kfa9kTZZF8" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -35,9 +35,11 @@
             android:name=".presentation.ui.activity.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <activity android:name=".presentation.ui.activity.AddActivity" />
+
         <activity
-            android:name=".presentation.ui.activity.LocationActivity"
+            android:name=".presentation.ui.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +47,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".presentation.ui.activity.LocationActivity"
+            android:exported="true"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

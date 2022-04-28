@@ -51,8 +51,8 @@ class ImageOperation(context: Context) {
     }
 
     @SuppressLint("Range")
-    fun getAllImage(locationId: Int): ArrayList<Image> {
-        val imageList = ArrayList<Image>()
+    fun getAllImage(locationId: Int): ArrayList<Image?> {
+        val imageList = ArrayList<Image?>()
 
         open()
         val c: Cursor = getAllImageQuery(locationId)
@@ -78,6 +78,18 @@ class ImageOperation(context: Context) {
     private fun getFirstImageQuery(): Cursor { //get first
         val query = "SELECT * FROM $IMAGE_TABLE WHERE $ID =0"
         return travelGuideDatabase!!.rawQuery(query,null)
+    }
+
+    fun deleteImage(imageId: Int) {
+        open()
+        travelGuideDatabase!!.delete(IMAGE_TABLE, "id = ?", arrayOf(imageId.toString()))
+        close()
+    }
+
+    fun deleteLocationImages(locationId: Int) {
+        open()
+        travelGuideDatabase!!.delete(IMAGE_TABLE, "image_location_id = ?", arrayOf(locationId.toString()))
+        close()
     }
 
 }

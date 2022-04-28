@@ -51,8 +51,8 @@ class VisitHistoryOperation(context: Context) {
     }
 
     @SuppressLint("Range")
-    fun getAllVisitHistory(locationId : Int): ArrayList<VisitHistory> {
-        val visitHistoryList = ArrayList<VisitHistory>()
+    fun getAllVisitHistory(locationId : Int): ArrayList<VisitHistory?> {
+        val visitHistoryList = ArrayList<VisitHistory?>()
 
         open()
         val c: Cursor = getAllVisitHistoryQuery(locationId)

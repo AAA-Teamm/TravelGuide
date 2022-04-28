@@ -289,4 +289,3 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
         _binding = null
     }
 }
-
