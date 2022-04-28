@@ -1,7 +1,6 @@
 package com.ateam.travelguide.util
 
 import android.content.Context
-import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,15 +10,14 @@ import com.ateam.travelguide.R
 import com.ateam.travelguide.model.Image
 import com.ateam.travelguide.model.Location
 
+class ToBeTravelledViewHolder(itemView: View, itemClick: ((position: Int) -> Unit)) :
+    RecyclerView.ViewHolder(itemView) {
 
-class ToBeTravelledViewHolder (itemView : View, itemClick : ((position : Int)->Unit)) : RecyclerView.ViewHolder(itemView){
-
-    var ivLocationPicture : ImageView
+    var ivLocationPicture: ImageView
     var tvLocationName: TextView
     var tvShortDetail: TextView
-    var tvLongDetail : TextView
-    var ivImportance : ImageView
-
+    var tvLongDetail: TextView
+    var ivImportance: ImageView
 
     init {
         tvLocationName = itemView.findViewById(R.id.tvLocationName)
@@ -31,37 +29,25 @@ class ToBeTravelledViewHolder (itemView : View, itemClick : ((position : Int)->U
         itemView.setOnClickListener { itemClick(adapterPosition) }
     }
 
-
-
-
-
-    fun bindData(context : Context, location: Location, image: Image?)
-
-    {
+    fun bindData(context: Context, location: Location, image: Image?) {
         tvLocationName.text = location.name
         tvShortDetail.text = location.shortDescription
         tvLongDetail.text = location.longDescription
 
         ivImportance.setImageResource(R.drawable.circle_background_blue)
 
-        when (location.priority)
-        {
+        when (location.priority) {
             0 -> ivImportance.setImageResource(R.drawable.circle_background_green)
             1 -> ivImportance.setImageResource(R.drawable.circle_background_blue)
-            2 ->ivImportance.setImageResource(R.drawable.circle_background_gray)
+            2 -> ivImportance.setImageResource(R.drawable.circle_background_gray)
         }
 
-        image?.let {
-            if (it.uri == Constant.NO_IMAGE_FEATURE) {
-                ivLocationPicture.setImageResource(R.drawable.union)
-            } else {
-                ivLocationPicture.setImageURI(image.uri!!.toUri())
-
-            }
+        if (image == null) {
+            ivLocationPicture.setImageResource(R.drawable.union)
+        } else {
+            ivLocationPicture.setImageURI(image.uri!!.toUri())
         }
 
     }
-
-
 
 }

@@ -33,14 +33,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginEnd="?attr/actionBarSize"
             android:maxLines="2"
             android:text="@string/add_location"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_24_sp"
-            android:textStyle="normal"
-            tools:layout_editor_absoluteX="48dp"
-            tools:layout_editor_absoluteY="12dp" />
+            android:textStyle="normal" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -94,7 +91,7 @@
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/customSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="24dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -267,7 +264,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="44dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="47dp"
                 android:layout_marginBottom="17dp"
                 android:background="@drawable/blue_button_background"

@@ -31,4 +31,8 @@ class LocationVisitHistoryViewModel : ViewModel() {
         ImageOperation(context).deleteLocationImages(locationId)
     }
 
+    fun updateTravelState(context: Context, locationId: Int) {
+        LocationOperation(context).updateTravelStateFromDatabase(locationId)
+    }
+
 }

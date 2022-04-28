@@ -21,6 +21,8 @@ import com.ateam.travelguide.model.Location
 import com.ateam.travelguide.model.VisitHistory
 import com.ateam.travelguide.presentation.adapter.VisitHistoryAdapter
 import com.ateam.travelguide.util.Constant.LOCATION_ID
+import com.ateam.travelguide.util.getTheDay
+import com.ateam.travelguide.util.getTheDayWithSeparate
 import com.ateam.travelguide.util.writeDate
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemChangeListener
@@ -81,20 +83,6 @@ class LocationDetailFragment : Fragment() {
                     showImageInFullScreenMode(locationImages[position]!!)
                 }
             })
-            // todo "add day month year state to text in the image bottom TextView"
-            imageSlider.setItemChangeListener(object : ItemChangeListener {
-                override fun onItemChanged(position: Int) {
-                    if (locationImages[position] != null) {
-                        if (locationImages[position]!!.day != null) {
-                            textViewHistoryDate.text = String().writeDate(
-                                locationImages[position]?.day!!,
-                                locationImages[position]?.month!!,
-                                locationImages[position]?.year!!
-                            )
-                        }
-                    }
-                }
-            })
         }
     }
 
@@ -117,19 +105,19 @@ class LocationDetailFragment : Fragment() {
             var buttonDrawable: Drawable? = binding.imageViewPriority.background
             buttonDrawable = DrawableCompat.wrap(buttonDrawable!!)
             when (locationInfo.priority) {
-                1 -> {
+                0 -> {
                     DrawableCompat.setTint(
                         buttonDrawable,
                         ContextCompat.getColor(requireContext(), R.color.green)
                     )
                 }
-                2 -> {
+                1 -> {
                     DrawableCompat.setTint(
                         buttonDrawable,
                         ContextCompat.getColor(requireContext(), R.color.blue)
                     )
                 }
-                3 -> {
+                2 -> {
                     DrawableCompat.setTint(
                         buttonDrawable,
                         ContextCompat.getColor(requireContext(), R.color.gray_circle_image)
@@ -143,7 +131,6 @@ class LocationDetailFragment : Fragment() {
             val sliderImageList = ArrayList<SlideModel>()
             locationImages.forEach { image ->
                 image?.let {
-                    println(it)
                     sliderImageList.add(SlideModel(it.uri, ScaleTypes.FIT))
                 }
             }
@@ -152,6 +139,8 @@ class LocationDetailFragment : Fragment() {
             binding.imageSlider.visibility = View.GONE
             binding.textViewHistoryDate.visibility = View.GONE
         }
+
+        binding.textViewHistoryDate.text = locationInfo.date
 
         initVisitHistoryRecycler()
     }

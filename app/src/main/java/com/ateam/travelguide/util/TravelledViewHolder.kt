@@ -37,13 +37,10 @@ class TravelledViewHolder (itemView: View, itemClick : ((position : Int)->Unit))
         tvLongDetail.text = location.longDescription
         tvDate.text = location.date
 
-        image?.let {
-            if (it.uri == NO_IMAGE_FEATURE) {
-                ivLocationPicture.setImageResource(R.drawable.union)
-            } else {
-                ivLocationPicture.setImageURI(image.uri!!.toUri())
-
-            }
+        if (image == null) {
+            ivLocationPicture.setImageResource(R.drawable.union)
+        } else {
+            ivLocationPicture.setImageURI(image.uri!!.toUri())
         }
     }
 

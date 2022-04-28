@@ -101,16 +101,16 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
                     val location = Location(
                         id = 0,
                         name = binding.editTextLocationName.text.toString(),
-                        date = "$day.+$month.+$year",
+                        date = "$day.$month.$year",
                         shortDescription = binding.editTextLocationShortDesc.text.toString(),
                         longDescription = binding.editTextLocationLongDesc.text.toString(),
                         priority = prioritySelection,
-                        visitStatus = false, //ziyaret edilmemiş
+                        visitStatus = "false", //ziyaret edilmemiş
                         latitude = args.lat!!,
                         longitude = args.long!!
                     )
 
-                    for (i in 0 until imageList.size) {
+                    for (i in 0..imageList.size - 2) {
                         imageList[i]?.let {
                             viewModel.addNewImagesToDatabase(requireContext(), it)
                         }
@@ -148,8 +148,8 @@ class AddNewLocationFragment : Fragment(), VisitHistoryImagesClickListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedPriObj = parent!!.getItemAtPosition(position).toString()
 
-                if(selectedPriObj.contains("Öncelik 0")) prioritySelection = 0
-                else if(selectedPriObj.contains("Öncelik 1")) prioritySelection = 1
+                if(selectedPriObj.contains("Öncelik 1")) prioritySelection = 0
+                else if(selectedPriObj.contains("Öncelik 2")) prioritySelection = 1
                 else prioritySelection = 2
             }
 
