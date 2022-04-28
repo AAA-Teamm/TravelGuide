@@ -61,3 +61,7 @@ fun String.getTheDayWithSeparate(calendar: Calendar): ArrayList<Int> {
     val year = calendar[Calendar.YEAR]
     return arrayListOf(day, month, year)
 }
+
+// todo "add date sorting function for the date state"
+
+// todo "add date sorting function for the priority"

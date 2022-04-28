@@ -139,7 +139,6 @@ class LocationDetailFragment : Fragment() {
             imageViewPriority.background = buttonDrawable
         }
 
-        println("location image size " + locationImages.size)
         if (locationImages.size > 0) {
             val sliderImageList = ArrayList<SlideModel>()
             locationImages.forEach { image ->
