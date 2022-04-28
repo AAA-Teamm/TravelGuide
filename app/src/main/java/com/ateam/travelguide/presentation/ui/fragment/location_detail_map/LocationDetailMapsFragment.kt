@@ -2,12 +2,11 @@ package com.ateam.travelguide.presentation.ui.fragment.location_detail_map
 
 import android.content.Intent
 import android.net.Uri
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.ateam.travelguide.R
@@ -41,7 +40,7 @@ class LocationDetailMapsFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[LocationDetailMapsViewModel::class.java]
         val locationId = args.locationId
 
-        val locationInfo = viewModel.locationInfo(requireContext(), locationId)!!
+        val locationInfo = viewModel.locationInfo(requireContext(), locationId)
 
         val callback = OnMapReadyCallback { googleMap ->
             val sydney = LatLng(locationInfo.latitude.toDouble(), locationInfo.longitude.toDouble())

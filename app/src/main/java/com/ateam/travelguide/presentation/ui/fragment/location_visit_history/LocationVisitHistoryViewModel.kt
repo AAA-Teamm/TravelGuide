@@ -23,7 +23,7 @@ class LocationVisitHistoryViewModel : ViewModel() {
         ImageOperation(context).addImage(image)
     }
 
-    fun getLocationInfo(context: Context, locationId: Int): Location? {
+    fun getLocationInfo(context: Context, locationId: Int): Location {
         return LocationOperation(context).getSelectedLocation(locationId)
     }
 

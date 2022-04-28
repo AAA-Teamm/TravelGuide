@@ -33,7 +33,7 @@ class LocationDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: VisitHistoryAdapter
     private lateinit var viewModel: LocationDetailViewModel
-    private var locationInfo: Location? = null
+    private lateinit var locationInfo: Location
     private var locationVisitHistory: ArrayList<VisitHistory?> = ArrayList()
     private var locationImages: ArrayList<Image?> = ArrayList()
     private var locationId: Int? = null
@@ -81,13 +81,18 @@ class LocationDetailFragment : Fragment() {
                     showImageInFullScreenMode(locationImages[position]!!)
                 }
             })
+            // todo "add day month year state to text in the image bottom TextView"
             imageSlider.setItemChangeListener(object : ItemChangeListener {
                 override fun onItemChanged(position: Int) {
-                    textViewHistoryDate.text = String().writeDate(
-                        locationImages[position]!!.day!!,
-                        locationImages[position]!!.month!!,
-                        locationImages[position]!!.year!!
-                    )
+                    if (locationImages[position] != null) {
+                        if (locationImages[position]!!.day != null) {
+                            textViewHistoryDate.text = String().writeDate(
+                                locationImages[position]?.day!!,
+                                locationImages[position]?.month!!,
+                                locationImages[position]?.year!!
+                            )
+                        }
+                    }
                 }
             })
         }
@@ -104,53 +109,56 @@ class LocationDetailFragment : Fragment() {
             viewModel.getAllVisitHistoryForSelectedLocation(requireContext(), locationId!!)
         locationImages = viewModel.getImageListForSelectedLocation(requireContext(), locationId!!)
 
-        locationInfo?.let {
-            binding.apply {
-                toolbarTitle.text = it.name
-                textViewShortDesc.text = it.shortDescription
-                textViewLongDesc.text = it.longDescription
+        binding.apply {
+            toolbarTitle.text = locationInfo.name
+            textViewShortDesc.text = locationInfo.shortDescription
+            textViewLongDesc.text = locationInfo.longDescription
 
-                var buttonDrawable: Drawable? = binding.imageViewPriority.background
-                buttonDrawable = DrawableCompat.wrap(buttonDrawable!!)
-                when (it.priority) {
-                    1 -> {
-                        DrawableCompat.setTint(
-                            buttonDrawable,
-                            ContextCompat.getColor(requireContext(), R.color.green)
-                        )
-                    }
-                    2 -> {
-                        DrawableCompat.setTint(
-                            buttonDrawable,
-                            ContextCompat.getColor(requireContext(), R.color.blue)
-                        )
-                    }
-                    3 -> {
-                        DrawableCompat.setTint(
-                            buttonDrawable,
-                            ContextCompat.getColor(requireContext(), R.color.gray_circle_image)
-                        )
-                    }
+            var buttonDrawable: Drawable? = binding.imageViewPriority.background
+            buttonDrawable = DrawableCompat.wrap(buttonDrawable!!)
+            when (locationInfo.priority) {
+                1 -> {
+                    DrawableCompat.setTint(
+                        buttonDrawable,
+                        ContextCompat.getColor(requireContext(), R.color.green)
+                    )
                 }
-                imageViewPriority.background = buttonDrawable
+                2 -> {
+                    DrawableCompat.setTint(
+                        buttonDrawable,
+                        ContextCompat.getColor(requireContext(), R.color.blue)
+                    )
+                }
+                3 -> {
+                    DrawableCompat.setTint(
+                        buttonDrawable,
+                        ContextCompat.getColor(requireContext(), R.color.gray_circle_image)
+                    )
+                }
             }
+            imageViewPriority.background = buttonDrawable
         }
 
-        if (locationImages.size > 0 && locationImages[0] != null) {
+        println("location image size " + locationImages.size)
+        if (locationImages.size > 0) {
             val sliderImageList = ArrayList<SlideModel>()
-            locationImages.forEach {
-                if (it != null) {
+            locationImages.forEach { image ->
+                image?.let {
+                    println(it)
                     sliderImageList.add(SlideModel(it.uri, ScaleTypes.FIT))
                 }
             }
             binding.imageSlider.setImageList(sliderImageList)
+        } else {
+            binding.imageSlider.visibility = View.GONE
+            binding.textViewHistoryDate.visibility = View.GONE
         }
 
         initVisitHistoryRecycler()
     }
 
     private fun initVisitHistoryRecycler() {
-        if (locationVisitHistory[0] != null) {
+        if (locationVisitHistory.size > 0) {
             adapter.visitHistoryList = viewModel
                 .getAllVisitHistoryForSelectedLocation(requireContext(), locationId!!).toList()
             binding.recyclerViewVisitHistory.adapter = adapter

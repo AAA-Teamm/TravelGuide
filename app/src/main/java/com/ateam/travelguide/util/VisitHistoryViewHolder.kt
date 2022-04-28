@@ -18,9 +18,9 @@ sealed class VisitHistoryViewHolder(binding: ViewBinding) : RecyclerView.ViewHol
 
     class AddImageWithDeleteButtonViewHolder(private val binding: AddImageRowWithDeleteButtonBinding) :
         VisitHistoryViewHolder(binding) {
-        fun bind(imageUri: Image, clickListener: VisitHistoryImagesClickListener) {
+        fun bind(imageUri: Image, clickListener: VisitHistoryImagesClickListener, position: Int) {
             binding.imageViewDelete.setOnClickListener {
-                clickListener.onClickedDeleteButton(imageUri.id)
+                clickListener.onClickedDeleteButton(position)
             }
             binding.imageViewPhoto.setImageURI(Uri.parse(imageUri.uri))
         }

@@ -7,7 +7,7 @@ import com.ateam.travelguide.model.Location
 
 class LocationDetailMapsViewModel: ViewModel() {
 
-    fun locationInfo(context: Context, locationId: Int): Location? {
+    fun locationInfo(context: Context, locationId: Int): Location {
         return LocationOperation(context).getSelectedLocation(locationId)
     }
 

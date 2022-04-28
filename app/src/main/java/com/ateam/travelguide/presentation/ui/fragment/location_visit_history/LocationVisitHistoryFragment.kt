@@ -40,7 +40,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private val binding get() = _binding!!
     private val calendar: Calendar = Calendar.getInstance()
     private val args: LocationVisitHistoryFragmentArgs by navArgs()
-    private var locationId: Int? = null
+    private var locationId: Int = 0
     private var year: Int = 0
     private var month: Int = 0
     private var day: Int = 0
@@ -72,8 +72,8 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
         viewModel = ViewModelProvider(this).get(LocationVisitHistoryViewModel::class.java)
         adapter = VisitHistoryImageListAdapter(this)
         imageList = ArrayList()
-        defaultNoImageData = Image(0, NO_IMAGE_FEATURE, null, null, null, locationId!!)
-        locationInfo = viewModel.getLocationInfo(requireContext(), locationId!!)!!
+        defaultNoImageData = Image(0, NO_IMAGE_FEATURE, null, null, null, locationId)
+        locationInfo = viewModel.getLocationInfo(requireContext(), locationId)
         val today = String().getTheDay(calendar)
 
         day = String().getTheDayWithSeparate(calendar)[0]
@@ -84,7 +84,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
             toolbarTitle.text = locationInfo.name
         }
 
-        imageList = viewModel.getAllImage(requireContext(), locationId!!)
+        imageList = viewModel.getAllImage(requireContext(), locationId)
         lastImageListSize = imageList.size
 
         if (imageList.size < 10) {
@@ -98,18 +98,18 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
 
     private fun initClickListeners() {
         binding.buttonSave.setOnClickListener {
-            deleteAllLocationImages(locationId!!)
+            deleteAllLocationImages(locationId)
             val visitHistory = VisitHistory(
                 id = 0,
                 year = calendar[Calendar.YEAR],
                 month = calendar[Calendar.MONTH] + 1,
                 day = calendar[Calendar.DATE],
                 longDescription = binding.editTextDescription.text.toString(),
-                historyLocationId = locationId!!
+                historyLocationId = locationId
             )
             viewModel.addVisitHistory(requireContext(), visitHistory)
-            imageList.forEach {
-                if (it != null) {
+            for (i in 0..imageList.size - 2) {
+                imageList[i]?.let {
                     viewModel.addNewImagesToDatabase(requireContext(), it)
                 }
             }
@@ -163,7 +163,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
                     val imageData = intentFromResult.data
                     if (imageData != null) {
                         val newImage =
-                            Image(0, imageData.toString(), year, month, day, locationId!!)
+                            Image(0, imageData.toString(), year, month, day, locationId)
                         imageList.add(newImage)
                         updateImageListInRecycler(imageList)
                     }
@@ -174,7 +174,7 @@ class LocationVisitHistoryFragment : Fragment(), VisitHistoryImagesClickListener
     private var cameraResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == AppCompatActivity.RESULT_OK) {
-                val newImage = Image(0, imageUri.toString(), year, month, day, locationId!!)
+                val newImage = Image(0, imageUri.toString(), year, month, day, locationId)
                 imageList.add(newImage)
                 updateImageListInRecycler(imageList)
                 Toast.makeText(
