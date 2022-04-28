@@ -31,6 +31,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        // liste guncellemesi ve adapter a listenin verilmesi veee adapterin recycler a verilmesi
+    }
+
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ::duzenleResult)
 

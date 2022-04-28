@@ -1,5 +1,6 @@
 package com.ateam.travelguide.presentation.ui.fragment.tab_fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +16,9 @@ import com.ateam.travelguide.model.Image
 import com.ateam.travelguide.model.Location
 import com.ateam.travelguide.presentation.adapter.ToBeTravelledAdapter
 import com.ateam.travelguide.presentation.adapter.TravelledAdapter
+import com.ateam.travelguide.presentation.ui.activity.LocationActivity
 import com.ateam.travelguide.presentation.ui.activity.MainViewModel
+import com.ateam.travelguide.util.Constant.LOCATION_ID
 
 
 class TravelledFragment : Fragment() {
@@ -26,30 +29,17 @@ class TravelledFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     var locationList = ArrayList<Location>()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-
-    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         binding = FragmentTravelledBinding.inflate(inflater)
 
         val lm = LinearLayoutManager(requireActivity())
         lm.orientation = LinearLayoutManager.VERTICAL
         binding.rvTravelled.layoutManager = lm
 
-
-
         return binding.root
-
     }
 
     override fun onResume() {
@@ -74,9 +64,10 @@ class TravelledFragment : Fragment() {
         binding.rvTravelled.adapter = adapter
     }
 
-    fun itemClick(position : Int)
-    {
-        Toast.makeText(requireActivity(), "Tıklandı. 2.fragment", Toast.LENGTH_SHORT).show()
+    fun itemClick(position: Int) {
+        val intent = Intent(requireActivity(), LocationActivity::class.java)
+        intent.putExtra(LOCATION_ID, locationList[position].id)
+        requireActivity().startActivity(intent)
     }
 
     /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -100,7 +91,6 @@ class TravelledFragment : Fragment() {
     }
 
      */
-
 
 
 }
