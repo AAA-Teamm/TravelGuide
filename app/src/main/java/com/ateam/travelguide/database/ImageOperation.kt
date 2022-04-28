@@ -80,4 +80,16 @@ class ImageOperation(context: Context) {
         return travelGuideDatabase!!.rawQuery(query,null)
     }
 
+    fun deleteImage(imageId: Int) {
+        open()
+        travelGuideDatabase!!.delete(IMAGE_TABLE, "id = ?", arrayOf(imageId.toString()))
+        close()
+    }
+
+    fun deleteLocationImages(locationId: Int) {
+        open()
+        travelGuideDatabase!!.delete(IMAGE_TABLE, "image_location_id = ?", arrayOf(locationId.toString()))
+        close()
+    }
+
 }
